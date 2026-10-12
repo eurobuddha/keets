@@ -1,0 +1,22 @@
+{
+  "sidecar/index.js": {
+    "mtime": 1791808644.8220294,
+    "ast_hash": "b7d26c4682ca251e0f202e91669f0c39",
+    "semantic_hash": "b7d26c4682ca251e0f202e91669f0c39"
+  },
+  "sidecar/package.json": {
+    "mtime": 1791808657.4106793,
+    "ast_hash": "9459975446bd7e2f0b8e76adb247b0ed",
+    "semantic_hash": "9459975446bd7e2f0b8e76adb247b0ed"
+  },
+  "test/bootstrap.js": {
+    "mtime": 1791808861.8211715,
+    "ast_hash": "950f323ae956aa55167f4fe13d718106",
+    "semantic_hash": "950f323ae956aa55167f4fe13d718106"
+  },
+  "test/two-node.sh": {
+    "mtime": 1791808997.1837764,
+    "ast_hash": "35e3e1753d4316a21ceeaae3fbc5e9da",
+    "semantic_hash": "35e3e1753d4316a21ceeaae3fbc5e9da"
+  }
+}

@@ -1,0 +1,964 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "index.js",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "sidecar_index",
+      "community": 0,
+      "norm_label": "index.js"
+    },
+    {
+      "label": "Hyperswarm",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "sidecar_index_hyperswarm",
+      "community": 0,
+      "norm_label": "hyperswarm"
+    },
+    {
+      "label": "DHT",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "sidecar_index_dht",
+      "community": 0,
+      "norm_label": "dht"
+    },
+    {
+      "label": "net",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "sidecar_index_net",
+      "community": 0,
+      "norm_label": "net"
+    },
+    {
+      "label": "fs",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "sidecar_index_fs",
+      "community": 0,
+      "norm_label": "fs"
+    },
+    {
+      "label": "path",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "sidecar_index_path",
+      "community": 0,
+      "norm_label": "path"
+    },
+    {
+      "label": "crypto",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "sidecar_index_crypto",
+      "community": 0,
+      "norm_label": "crypto"
+    },
+    {
+      "label": "arg()",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L18",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "sidecar_index_arg",
+      "community": 0,
+      "norm_label": "arg()"
+    },
+    {
+      "label": "PORT",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "sidecar_index_port",
+      "community": 0,
+      "norm_label": "port"
+    },
+    {
+      "label": "DATADIR",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "sidecar_index_datadir",
+      "community": 0,
+      "norm_label": "datadir"
+    },
+    {
+      "label": "TOPIC",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "sidecar_index_topic",
+      "community": 0,
+      "norm_label": "topic"
+    },
+    {
+      "label": "MAXCONNS",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "sidecar_index_maxconns",
+      "community": 0,
+      "norm_label": "maxconns"
+    },
+    {
+      "label": "CONNECT",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "sidecar_index_connect",
+      "community": 0,
+      "norm_label": "connect"
+    },
+    {
+      "label": "BOOTSTRAP",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "sidecar_index_bootstrap",
+      "community": 0,
+      "norm_label": "bootstrap"
+    },
+    {
+      "label": "TOKEN",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L32",
+      "_origin": "ast",
+      "id": "sidecar_index_token",
+      "community": 0,
+      "norm_label": "token"
+    },
+    {
+      "label": "keetsdir",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L39",
+      "_origin": "ast",
+      "id": "sidecar_index_keetsdir",
+      "community": 0,
+      "norm_label": "keetsdir"
+    },
+    {
+      "label": "seedfile",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "sidecar_index_seedfile",
+      "community": 0,
+      "norm_label": "seedfile"
+    },
+    {
+      "label": "keyPair",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "sidecar_index_keypair",
+      "community": 0,
+      "norm_label": "keypair"
+    },
+    {
+      "label": "mypub",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L50",
+      "_origin": "ast",
+      "id": "sidecar_index_mypub",
+      "community": 0,
+      "norm_label": "mypub"
+    },
+    {
+      "label": "preamble()",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L55",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "sidecar_index_preamble",
+      "community": 0,
+      "norm_label": "preamble()"
+    },
+    {
+      "label": "opts",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L70",
+      "_origin": "ast",
+      "id": "sidecar_index_opts",
+      "community": 0,
+      "norm_label": "opts"
+    },
+    {
+      "label": "swarm",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L72",
+      "_origin": "ast",
+      "id": "sidecar_index_swarm",
+      "community": 0,
+      "norm_label": "swarm"
+    },
+    {
+      "label": "package.json",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "sidecar_package",
+      "community": 1,
+      "norm_label": "package.json"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L2",
+      "_origin": "ast",
+      "id": "sidecar_package_name",
+      "community": 1,
+      "norm_label": "name"
+    },
+    {
+      "label": "version",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "sidecar_package_version",
+      "community": 1,
+      "norm_label": "version"
+    },
+    {
+      "label": "description",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "sidecar_package_description",
+      "community": 1,
+      "norm_label": "description"
+    },
+    {
+      "label": "main",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "sidecar_package_main",
+      "community": 1,
+      "norm_label": "main"
+    },
+    {
+      "label": "scripts",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "sidecar_package_scripts",
+      "community": 1,
+      "norm_label": "scripts"
+    },
+    {
+      "label": "test",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "sidecar_package_scripts_test",
+      "community": 1,
+      "norm_label": "test"
+    },
+    {
+      "label": "keywords",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "sidecar_package_keywords",
+      "community": 1,
+      "norm_label": "keywords"
+    },
+    {
+      "label": "author",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "sidecar_package_author",
+      "community": 1,
+      "norm_label": "author"
+    },
+    {
+      "label": "license",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "sidecar_package_license",
+      "community": 1,
+      "norm_label": "license"
+    },
+    {
+      "label": "type",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "sidecar_package_type",
+      "community": 1,
+      "norm_label": "type"
+    },
+    {
+      "label": "dependencies",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "sidecar_package_dependencies",
+      "community": 2,
+      "norm_label": "dependencies"
+    },
+    {
+      "label": "hyperdht",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "sidecar_package_dependencies_hyperdht",
+      "community": 2,
+      "norm_label": "hyperdht"
+    },
+    {
+      "label": "hyperdht",
+      "file_type": "concept",
+      "source_file": "sidecar/package.json",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "hyperdht",
+      "community": 2,
+      "norm_label": "hyperdht"
+    },
+    {
+      "label": "hyperswarm",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "sidecar_package_dependencies_hyperswarm",
+      "community": 2,
+      "norm_label": "hyperswarm"
+    },
+    {
+      "label": "hyperswarm",
+      "file_type": "concept",
+      "source_file": "sidecar/package.json",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "hyperswarm",
+      "community": 2,
+      "norm_label": "hyperswarm"
+    },
+    {
+      "label": "bootstrap.js",
+      "file_type": "code",
+      "source_file": "test/bootstrap.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "test_bootstrap",
+      "community": 3,
+      "norm_label": "bootstrap.js"
+    },
+    {
+      "label": "DHT",
+      "file_type": "code",
+      "source_file": "test/bootstrap.js",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "test_bootstrap_dht",
+      "community": 3,
+      "norm_label": "dht"
+    },
+    {
+      "label": "port",
+      "file_type": "code",
+      "source_file": "test/bootstrap.js",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "test_bootstrap_port",
+      "community": 3,
+      "norm_label": "port"
+    },
+    {
+      "label": "node",
+      "file_type": "code",
+      "source_file": "test/bootstrap.js",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "test_bootstrap_node",
+      "community": 3,
+      "norm_label": "node"
+    },
+    {
+      "label": "two-node.sh",
+      "file_type": "code",
+      "source_file": "test/two-node.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "_origin": "ast",
+      "id": "test_two_node",
+      "community": 4,
+      "norm_label": "two-node.sh"
+    },
+    {
+      "label": "two-node.sh script",
+      "file_type": "code",
+      "source_file": "test/two-node.sh",
+      "source_location": "L1",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "_origin": "ast",
+      "id": "test_two_node_sh__entry",
+      "community": 4,
+      "norm_label": "two-node.sh script"
+    },
+    {
+      "label": "rpc()",
+      "file_type": "code",
+      "source_file": "test/two-node.sh",
+      "source_location": "L14",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "test_two_node_rpc",
+      "community": 4,
+      "norm_label": "rpc()"
+    },
+    {
+      "label": "cleanup()",
+      "file_type": "code",
+      "source_file": "test/two-node.sh",
+      "source_location": "L16",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "_origin": "ast",
+      "id": "test_two_node_cleanup",
+      "community": 4,
+      "norm_label": "cleanup()"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_arg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_bootstrap",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_connect",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_crypto",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L23",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_datadir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_dht",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_fs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_hyperswarm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_keetsdir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_keypair",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_maxconns",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L50",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_mypub",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_net",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L70",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_opts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_port",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_preamble",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_seedfile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L72",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_swarm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_token",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L100",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_topic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package",
+      "target": "sidecar_package_author",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L13",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package",
+      "target": "sidecar_package_dependencies",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package",
+      "target": "sidecar_package_description",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package",
+      "target": "sidecar_package_keywords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package",
+      "target": "sidecar_package_license",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package",
+      "target": "sidecar_package_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package",
+      "target": "sidecar_package_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package",
+      "target": "sidecar_package_scripts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package",
+      "target": "sidecar_package_type",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package",
+      "target": "sidecar_package_version",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package_scripts",
+      "target": "sidecar_package_scripts_test",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package_dependencies",
+      "target": "sidecar_package_dependencies_hyperdht",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package_dependencies",
+      "target": "sidecar_package_dependencies_hyperswarm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L14",
+      "weight": 1.0,
+      "context": "import",
+      "_origin": "ast",
+      "source": "sidecar_package_dependencies_hyperdht",
+      "target": "hyperdht",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "context": "import",
+      "_origin": "ast",
+      "source": "sidecar_package_dependencies_hyperswarm",
+      "target": "hyperswarm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/bootstrap.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "test_bootstrap",
+      "target": "test_bootstrap_dht",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/bootstrap.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "test_bootstrap",
+      "target": "test_bootstrap_node",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/bootstrap.js",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "test_bootstrap",
+      "target": "test_bootstrap_port",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "test/two-node.sh",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "test_two_node",
+      "target": "test_two_node_cleanup",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "defines",
+      "confidence": "EXTRACTED",
+      "source_file": "test/two-node.sh",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "test_two_node",
+      "target": "test_two_node_rpc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "test/two-node.sh",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "test_two_node",
+      "target": "test_two_node_sh__entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "test/two-node.sh",
+      "source_location": "L66",
+      "weight": 1.0,
+      "context": "call",
+      "_origin": "ast",
+      "source": "test_two_node_sh__entry",
+      "target": "test_two_node_rpc",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": []
+}
