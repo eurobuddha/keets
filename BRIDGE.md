@@ -7,9 +7,14 @@ type 24) on the `keets` branch of `core/minima-core`.
 ## Flow
 
 1. Minima node starts with `-keets`. Once its NIO server is listening, `KeetsManager`
-   spawns the sidecar with args `--port --datadir --topic --maxconns [--bootstrap]
-   [--connect]` and env `KEETS_TOKEN` (32-byte hex, random per node boot — never crosses
-   the DHT, never on argv).
+   spawns the sidecar (`-keetsnode` runtime, default `node`; an Electron binary works —
+   `ELECTRON_RUN_AS_NODE=1` is always set on the child) with args `--port --datadir
+   --topic --maxconns [--bootstrap] [--connect]` and env `KEETS_TOKEN` (32-byte hex,
+   random per node boot — never crosses the DHT, never on a process argv).
+   **Android instead**: the app hosts the sidecar as a bare-kit worklet
+   (`apks/base` `KeetsWorklet`) with the same args plus `--token <hex>` — worklet
+   arguments live in process memory, not /proc cmdline, so argv privacy still holds.
+   The jar's `-keets` flag stays OFF there; the app reads `KeetsManager.getTokenHex()`.
 2. The sidecar joins the Hyperswarm topic `sha256(topicString)` with
    `{server: true, client: true}` and optionally `joinPeer()`s each `--connect` pubkey.
 3. For EVERY established hyperswarm connection — dialed or accepted — the sidecar opens a

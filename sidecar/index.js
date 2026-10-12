@@ -6,13 +6,22 @@
 // preamble is injected so the Java side can flag the client and derive its synthetic
 // per-pubkey identity. Frame spec: ../BRIDGE.md. After the preamble the bytes are
 // end-to-end Minima protocol between the two Java nodes — this process never parses them.
+//
+// Runs on TWO runtimes from one source: node (desktop, incl. Electron via
+// ELECTRON_RUN_AS_NODE) and bare (Android bare-kit worklet). Builtins are picked at
+// runtime — node's package-"imports" can't target builtins from CJS (ERR_INVALID_URL_SCHEME,
+// v24) — and all crypto goes through sodium-universal, which both runtimes load natively.
+// Keep every require specifier a string literal so bare-pack can preresolve them.
+
+const IS_BARE = typeof Bare !== 'undefined'
 
 const Hyperswarm = require('hyperswarm')
 const DHT = require('hyperdht')
-const net = require('net')
-const fs = require('fs')
-const path = require('path')
-const crypto = require('crypto')
+const sodium = require('sodium-universal')
+const net = IS_BARE ? require('bare-tcp') : require('net')
+const fs = IS_BARE ? require('bare-fs') : require('fs')
+const path = IS_BARE ? require('bare-path') : require('path')
+const process = IS_BARE ? require('bare-process') : require('process')
 
 // --- args ---------------------------------------------------------------
 function arg (name, def) {
@@ -29,10 +38,18 @@ const BOOTSTRAP = arg('bootstrap', '').split(',').filter(Boolean).map(s => {
   return { host: s.slice(0, ix), port: parseInt(s.slice(ix + 1)) }
 })
 
-const TOKEN = (process.env.KEETS_TOKEN || '').replace(/^0x/i, '')
+// env on desktop (never argv — visible in ps); --token only inside a bare-kit worklet,
+// whose arguments live in process memory, not /proc cmdline.
+const TOKEN = (process.env.KEETS_TOKEN || arg('token', '')).replace(/^0x/i, '')
 if (TOKEN.length !== 64) {
   console.error('KEETS_TOKEN env var missing or invalid — refusing to start')
   process.exit(1)
+}
+
+function sha256 (buf) {
+  const out = Buffer.alloc(32)
+  sodium.crypto_hash_sha256(out, buf)
+  return out
 }
 
 // --- keypair: persistent 32-byte seed = this node's network identity ----
@@ -43,7 +60,8 @@ let seed
 if (fs.existsSync(seedfile)) {
   seed = fs.readFileSync(seedfile)
 } else {
-  seed = crypto.randomBytes(32)
+  seed = Buffer.alloc(32)
+  sodium.randombytes_buf(seed)
   fs.writeFileSync(seedfile, seed, { mode: 0o600 })
 }
 const keyPair = DHT.keyPair(seed)
@@ -79,7 +97,11 @@ swarm.on('connection', (conn, info) => {
   }
   conns++
   const pk = '0x' + info.publicKey.toString('hex')
-  console.log('peer connected pubkey:' + pk + ' initiator:' + conn.isInitiator + ' conns:' + conns)
+  // path = the UDP endpoint actually carrying the bytes: the peer itself after a
+  // successful hole punch, or a DHT relay node when punching failed (CGNAT fallback).
+  const raw = conn.rawStream
+  const via = raw && raw.remoteHost ? raw.remoteHost + ':' + raw.remotePort : 'unknown'
+  console.log('peer connected pubkey:' + pk + ' initiator:' + conn.isInitiator + ' path:' + via + ' conns:' + conns)
 
   const tcp = net.connect(PORT, '127.0.0.1')
   tcp.on('connect', () => {
@@ -97,7 +119,7 @@ swarm.on('connection', (conn, info) => {
   tcp.on('close', () => conn.destroy())
 })
 
-const topic = crypto.createHash('sha256').update(TOPIC).digest()
+const topic = sha256(Buffer.from(TOPIC))
 swarm.join(topic, { server: true, client: true })
 for (const pk of CONNECT) {
   swarm.joinPeer(Buffer.from(pk.replace(/^0x/i, ''), 'hex'))
@@ -106,7 +128,10 @@ for (const pk of CONNECT) {
 console.log('keets sidecar up — pubkey:0x' + mypub + ' topic:' + TOPIC + ' node:127.0.0.1:' + PORT)
 swarm.flush().then(() => console.log('swarm flushed — announced on DHT'))
 
-// exit when the parent Minima node dies (its end of our stdin pipe closes)
-process.stdin.resume()
-process.stdin.on('end', () => process.exit(0))
-process.stdin.on('close', () => process.exit(0))
+// exit when the parent Minima node dies (its end of our stdin pipe closes).
+// A bare-kit worklet has no parent pipe — its host app owns the lifecycle instead.
+if (process.stdin && typeof process.stdin.resume === 'function') {
+  process.stdin.resume()
+  process.stdin.on('end', () => process.exit(0))
+  process.stdin.on('close', () => process.exit(0))
+}
