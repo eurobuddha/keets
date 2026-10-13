@@ -93,9 +93,19 @@ function preamble (remotePubKey, initiator) {
 }
 
 // --- swarm ----------------------------------------------------------------
+// Liveness heartbeat for the first minute (on-device debugging: if these stop,
+// the event loop is blocked in whatever step was logged last).
+let hbn = 0
+const hb = setInterval(() => {
+  console.log('keets hb ' + (++hbn * 5) + 's')
+  if (hbn >= 12) clearInterval(hb)
+}, 5000)
+
 const opts = { keyPair }
 if (BOOTSTRAP.length) opts.bootstrap = BOOTSTRAP
+console.log('keets step: creating swarm')
 const swarm = new Hyperswarm(opts)
+console.log('keets step: swarm created')
 
 let conns = 0
 swarm.on('connection', (conn, info) => {
@@ -128,17 +138,38 @@ swarm.on('connection', (conn, info) => {
 })
 
 const topic = sha256(Buffer.from(TOPIC))
+console.log('keets step: joining topic')
 swarm.join(topic, { server: true, client: true })
+console.log('keets step: topic joined')
 for (const pk of CONNECT) {
   swarm.joinPeer(Buffer.from(pk.replace(/^0x/i, ''), 'hex'))
 }
 
 console.log('keets sidecar up — pubkey:0x' + mypub + ' topic:' + TOPIC + ' node:127.0.0.1:' + PORT)
-swarm.flush().then(() => console.log('swarm flushed — announced on DHT'))
+let flushed = false
+swarm.flush().then(
+  () => { flushed = true; console.log('swarm flushed — announced on DHT') },
+  (e) => console.log('swarm flush FAILED: ' + (e && e.message))
+)
+// If the announce hasn't completed quickly, say why: how many DHT nodes we actually
+// know (0 = our UDP never got a single reply) and whether a bootstrap answers a ping.
+setTimeout(() => {
+  if (flushed) return
+  let known = -1
+  try { known = swarm.dht.toArray().length } catch (e) {}
+  console.log('keets diag: not announced after 20s — dht nodes known: ' + known)
+  const b = BOOTSTRAP.length ? BOOTSTRAP[0] : { host: '65.109.31.226', port: 49737 }
+  swarm.dht.ping(b).then(
+    (r) => console.log('keets diag: ping ' + b.host + ':' + b.port + ' OK'),
+    (e) => console.log('keets diag: ping ' + b.host + ':' + b.port + ' FAILED: ' + (e && e.message))
+  )
+}, 20000)
 
 // exit when the parent Minima node dies (its end of our stdin pipe closes).
-// A bare-kit worklet has no parent pipe — its host app owns the lifecycle instead.
-if (process.stdin && typeof process.stdin.resume === 'function') {
+// NEVER under bare: a worklet's fd 0 is /dev/null, which EOFs instantly — this very
+// hook silently exited the worklet ~100ms after startup (proven on Fold 2026-10-13).
+// The host app owns a worklet's lifecycle (Worklet.terminate), not stdin.
+if (!IS_BARE && process.stdin && typeof process.stdin.resume === 'function') {
   process.stdin.resume()
   process.stdin.on('end', () => process.exit(0))
   process.stdin.on('close', () => process.exit(0))
