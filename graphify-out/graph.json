@@ -4,6 +4,94 @@
   "graph": {},
   "nodes": [
     {
+      "label": "BRIDGE.md",
+      "file_type": "document",
+      "source_file": "BRIDGE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "bridge",
+      "community": 5,
+      "community_name": "keets bridge protocol \u2014 MSG_KEETS preamble",
+      "norm_label": "bridge.md"
+    },
+    {
+      "label": "keets bridge protocol \u2014 MSG_KEETS preamble",
+      "file_type": "document",
+      "source_file": "BRIDGE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "bridge_keets_bridge_protocol_msg_keets_preamble",
+      "community": 5,
+      "community_name": "keets bridge protocol \u2014 MSG_KEETS preamble",
+      "norm_label": "keets bridge protocol \u2014 msg_keets preamble"
+    },
+    {
+      "label": "Flow",
+      "file_type": "document",
+      "source_file": "BRIDGE.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "bridge_flow",
+      "community": 5,
+      "community_name": "keets bridge protocol \u2014 MSG_KEETS preamble",
+      "norm_label": "flow"
+    },
+    {
+      "label": "MSG_KEETS frame (74 bytes total)",
+      "file_type": "document",
+      "source_file": "BRIDGE.md",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "bridge_msg_keets_frame_74_bytes_total",
+      "community": 5,
+      "community_name": "keets bridge protocol \u2014 MSG_KEETS preamble",
+      "norm_label": "msg_keets frame (74 bytes total)"
+    },
+    {
+      "label": "Java-side acceptance rules (all must hold, else disconnect)",
+      "file_type": "document",
+      "source_file": "BRIDGE.md",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "bridge_java_side_acceptance_rules_all_must_hold_else_disconnect",
+      "community": 5,
+      "community_name": "keets bridge protocol \u2014 MSG_KEETS preamble",
+      "norm_label": "java-side acceptance rules (all must hold, else disconnect)"
+    },
+    {
+      "label": "Sidecar files (under `<datadir>/keets/`)",
+      "file_type": "document",
+      "source_file": "BRIDGE.md",
+      "source_location": "L53",
+      "_origin": "ast",
+      "id": "bridge_sidecar_files_under_datadir_keets",
+      "community": 5,
+      "community_name": "keets bridge protocol \u2014 MSG_KEETS preamble",
+      "norm_label": "sidecar files (under `<datadir>/keets/`)"
+    },
+    {
+      "label": "Topics",
+      "file_type": "document",
+      "source_file": "BRIDGE.md",
+      "source_location": "L60",
+      "_origin": "ast",
+      "id": "bridge_topics",
+      "community": 5,
+      "community_name": "keets bridge protocol \u2014 MSG_KEETS preamble",
+      "norm_label": "topics"
+    },
+    {
+      "label": "Bootstrap",
+      "file_type": "document",
+      "source_file": "BRIDGE.md",
+      "source_location": "L65",
+      "_origin": "ast",
+      "id": "bridge_bootstrap",
+      "community": 5,
+      "community_name": "keets bridge protocol \u2014 MSG_KEETS preamble",
+      "norm_label": "bootstrap"
+    },
+    {
       "label": "index.js",
       "file_type": "code",
       "source_file": "sidecar/index.js",
@@ -11,218 +99,219 @@
       "_origin": "ast",
       "id": "sidecar_index",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "index.js"
     },
     {
       "label": "Hyperswarm",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L10",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "sidecar_index_hyperswarm",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "hyperswarm"
     },
     {
       "label": "DHT",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L11",
+      "source_location": "L19",
       "_origin": "ast",
       "id": "sidecar_index_dht",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "dht"
     },
     {
-      "label": "net",
+      "label": "sodium",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L12",
+      "source_location": "L20",
       "_origin": "ast",
-      "id": "sidecar_index_net",
+      "id": "sidecar_index_sodium",
       "community": 0,
-      "norm_label": "net"
-    },
-    {
-      "label": "fs",
-      "file_type": "code",
-      "source_file": "sidecar/index.js",
-      "source_location": "L13",
-      "_origin": "ast",
-      "id": "sidecar_index_fs",
-      "community": 0,
-      "norm_label": "fs"
-    },
-    {
-      "label": "path",
-      "file_type": "code",
-      "source_file": "sidecar/index.js",
-      "source_location": "L14",
-      "_origin": "ast",
-      "id": "sidecar_index_path",
-      "community": 0,
-      "norm_label": "path"
-    },
-    {
-      "label": "crypto",
-      "file_type": "code",
-      "source_file": "sidecar/index.js",
-      "source_location": "L15",
-      "_origin": "ast",
-      "id": "sidecar_index_crypto",
-      "community": 0,
-      "norm_label": "crypto"
+      "community_name": "index.js",
+      "norm_label": "sodium"
     },
     {
       "label": "arg()",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L18",
+      "source_location": "L27",
       "_callable": true,
       "_origin": "ast",
       "id": "sidecar_index_arg",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "arg()"
     },
     {
       "label": "PORT",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L22",
+      "source_location": "L31",
       "_origin": "ast",
       "id": "sidecar_index_port",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "port"
     },
     {
       "label": "DATADIR",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L23",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "sidecar_index_datadir",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "datadir"
     },
     {
       "label": "TOPIC",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L24",
+      "source_location": "L33",
       "_origin": "ast",
       "id": "sidecar_index_topic",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "topic"
     },
     {
       "label": "MAXCONNS",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L25",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "sidecar_index_maxconns",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "maxconns"
     },
     {
       "label": "CONNECT",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L26",
+      "source_location": "L35",
       "_origin": "ast",
       "id": "sidecar_index_connect",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "connect"
     },
     {
       "label": "BOOTSTRAP",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L27",
+      "source_location": "L36",
       "_origin": "ast",
       "id": "sidecar_index_bootstrap",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "bootstrap"
     },
     {
       "label": "TOKEN",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L32",
+      "source_location": "L43",
       "_origin": "ast",
       "id": "sidecar_index_token",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "token"
+    },
+    {
+      "label": "sha256()",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L49",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "sidecar_index_sha256",
+      "community": 0,
+      "community_name": "index.js",
+      "norm_label": "sha256()"
     },
     {
       "label": "keetsdir",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L39",
+      "source_location": "L56",
       "_origin": "ast",
       "id": "sidecar_index_keetsdir",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "keetsdir"
     },
     {
       "label": "seedfile",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L41",
+      "source_location": "L58",
       "_origin": "ast",
       "id": "sidecar_index_seedfile",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "seedfile"
     },
     {
       "label": "keyPair",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L49",
+      "source_location": "L67",
       "_origin": "ast",
       "id": "sidecar_index_keypair",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "keypair"
     },
     {
       "label": "mypub",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L50",
+      "source_location": "L68",
       "_origin": "ast",
       "id": "sidecar_index_mypub",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "mypub"
     },
     {
       "label": "preamble()",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L55",
+      "source_location": "L73",
       "_callable": true,
       "_origin": "ast",
       "id": "sidecar_index_preamble",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "preamble()"
     },
     {
       "label": "opts",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L70",
+      "source_location": "L88",
       "_origin": "ast",
       "id": "sidecar_index_opts",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "opts"
     },
     {
       "label": "swarm",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L72",
+      "source_location": "L90",
       "_origin": "ast",
       "id": "sidecar_index_swarm",
       "community": 0,
+      "community_name": "index.js",
       "norm_label": "swarm"
     },
     {
@@ -233,6 +322,7 @@
       "_origin": "ast",
       "id": "sidecar_package",
       "community": 1,
+      "community_name": "package.json",
       "norm_label": "package.json"
     },
     {
@@ -243,6 +333,7 @@
       "_origin": "ast",
       "id": "sidecar_package_name",
       "community": 1,
+      "community_name": "package.json",
       "norm_label": "name"
     },
     {
@@ -253,6 +344,7 @@
       "_origin": "ast",
       "id": "sidecar_package_version",
       "community": 1,
+      "community_name": "package.json",
       "norm_label": "version"
     },
     {
@@ -263,6 +355,7 @@
       "_origin": "ast",
       "id": "sidecar_package_description",
       "community": 1,
+      "community_name": "package.json",
       "norm_label": "description"
     },
     {
@@ -273,117 +366,195 @@
       "_origin": "ast",
       "id": "sidecar_package_main",
       "community": 1,
+      "community_name": "package.json",
       "norm_label": "main"
-    },
-    {
-      "label": "scripts",
-      "file_type": "code",
-      "source_file": "sidecar/package.json",
-      "source_location": "L6",
-      "_origin": "ast",
-      "id": "sidecar_package_scripts",
-      "community": 1,
-      "norm_label": "scripts"
-    },
-    {
-      "label": "test",
-      "file_type": "code",
-      "source_file": "sidecar/package.json",
-      "source_location": "L7",
-      "_origin": "ast",
-      "id": "sidecar_package_scripts_test",
-      "community": 1,
-      "norm_label": "test"
-    },
-    {
-      "label": "keywords",
-      "file_type": "code",
-      "source_file": "sidecar/package.json",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "sidecar_package_keywords",
-      "community": 1,
-      "norm_label": "keywords"
-    },
-    {
-      "label": "author",
-      "file_type": "code",
-      "source_file": "sidecar/package.json",
-      "source_location": "L10",
-      "_origin": "ast",
-      "id": "sidecar_package_author",
-      "community": 1,
-      "norm_label": "author"
     },
     {
       "label": "license",
       "file_type": "code",
       "source_file": "sidecar/package.json",
-      "source_location": "L11",
+      "source_location": "L6",
       "_origin": "ast",
       "id": "sidecar_package_license",
       "community": 1,
+      "community_name": "package.json",
       "norm_label": "license"
     },
     {
       "label": "type",
       "file_type": "code",
       "source_file": "sidecar/package.json",
-      "source_location": "L12",
+      "source_location": "L7",
       "_origin": "ast",
       "id": "sidecar_package_type",
       "community": 1,
+      "community_name": "package.json",
       "norm_label": "type"
     },
     {
       "label": "dependencies",
       "file_type": "code",
       "source_file": "sidecar/package.json",
-      "source_location": "L13",
+      "source_location": "L8",
       "_origin": "ast",
       "id": "sidecar_package_dependencies",
-      "community": 2,
+      "community": 6,
+      "community_name": "dependencies",
       "norm_label": "dependencies"
     },
     {
+      "label": "bare-fs",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "sidecar_package_dependencies_bare_fs",
+      "community": 7,
+      "community_name": "bare-fs",
+      "norm_label": "bare-fs"
+    },
+    {
+      "label": "bare-fs",
+      "file_type": "concept",
+      "source_file": "sidecar/package.json",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "bare_fs",
+      "community": 7,
+      "community_name": "bare-fs",
+      "norm_label": "bare-fs"
+    },
+    {
+      "label": "bare-path",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "sidecar_package_dependencies_bare_path",
+      "community": 8,
+      "community_name": "bare-path",
+      "norm_label": "bare-path"
+    },
+    {
+      "label": "bare-path",
+      "file_type": "concept",
+      "source_file": "sidecar/package.json",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "bare_path",
+      "community": 8,
+      "community_name": "bare-path",
+      "norm_label": "bare-path"
+    },
+    {
+      "label": "bare-process",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "sidecar_package_dependencies_bare_process",
+      "community": 9,
+      "community_name": "bare-process",
+      "norm_label": "bare-process"
+    },
+    {
+      "label": "bare-process",
+      "file_type": "concept",
+      "source_file": "sidecar/package.json",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "bare_process",
+      "community": 9,
+      "community_name": "bare-process",
+      "norm_label": "bare-process"
+    },
+    {
+      "label": "bare-tcp",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "sidecar_package_dependencies_bare_tcp",
+      "community": 6,
+      "community_name": "dependencies",
+      "norm_label": "bare-tcp"
+    },
+    {
+      "label": "bare-tcp",
+      "file_type": "concept",
+      "source_file": "sidecar/package.json",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "bare_tcp",
+      "community": 6,
+      "community_name": "dependencies",
+      "norm_label": "bare-tcp"
+    },
+    {
       "label": "hyperdht",
       "file_type": "code",
       "source_file": "sidecar/package.json",
-      "source_location": "L14",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "sidecar_package_dependencies_hyperdht",
       "community": 2,
+      "community_name": "hyperdht",
       "norm_label": "hyperdht"
     },
     {
       "label": "hyperdht",
       "file_type": "concept",
       "source_file": "sidecar/package.json",
-      "source_location": "L14",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "hyperdht",
       "community": 2,
+      "community_name": "hyperdht",
       "norm_label": "hyperdht"
     },
     {
       "label": "hyperswarm",
       "file_type": "code",
       "source_file": "sidecar/package.json",
-      "source_location": "L15",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "sidecar_package_dependencies_hyperswarm",
-      "community": 2,
+      "community": 10,
+      "community_name": "hyperswarm",
       "norm_label": "hyperswarm"
     },
     {
       "label": "hyperswarm",
       "file_type": "concept",
       "source_file": "sidecar/package.json",
-      "source_location": "L15",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "hyperswarm",
-      "community": 2,
+      "community": 10,
+      "community_name": "hyperswarm",
       "norm_label": "hyperswarm"
+    },
+    {
+      "label": "sodium-universal",
+      "file_type": "code",
+      "source_file": "sidecar/package.json",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "sidecar_package_dependencies_sodium_universal",
+      "community": 11,
+      "community_name": "sodium-universal",
+      "norm_label": "sodium-universal"
+    },
+    {
+      "label": "sodium-universal",
+      "file_type": "concept",
+      "source_file": "sidecar/package.json",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "sodium_universal",
+      "community": 11,
+      "community_name": "sodium-universal",
+      "norm_label": "sodium-universal"
     },
     {
       "label": "bootstrap.js",
@@ -391,9 +562,10 @@
       "source_file": "test/bootstrap.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "test_bootstrap",
       "community": 3,
-      "norm_label": "bootstrap.js"
+      "norm_label": "bootstrap.js",
+      "id": "test_bootstrap",
+      "community_name": "bootstrap.js"
     },
     {
       "label": "DHT",
@@ -401,9 +573,10 @@
       "source_file": "test/bootstrap.js",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "test_bootstrap_dht",
       "community": 3,
-      "norm_label": "dht"
+      "norm_label": "dht",
+      "id": "test_bootstrap_dht",
+      "community_name": "bootstrap.js"
     },
     {
       "label": "port",
@@ -411,9 +584,10 @@
       "source_file": "test/bootstrap.js",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "test_bootstrap_port",
       "community": 3,
-      "norm_label": "port"
+      "norm_label": "port",
+      "id": "test_bootstrap_port",
+      "community_name": "bootstrap.js"
     },
     {
       "label": "node",
@@ -421,9 +595,10 @@
       "source_file": "test/bootstrap.js",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "test_bootstrap_node",
       "community": 3,
-      "norm_label": "node"
+      "norm_label": "node",
+      "id": "test_bootstrap_node",
+      "community_name": "bootstrap.js"
     },
     {
       "label": "two-node.sh",
@@ -435,9 +610,10 @@
         "kind": "file"
       },
       "_origin": "ast",
-      "id": "test_two_node",
       "community": 4,
-      "norm_label": "two-node.sh"
+      "norm_label": "two-node.sh",
+      "id": "test_two_node",
+      "community_name": "two-node.sh"
     },
     {
       "label": "two-node.sh script",
@@ -449,9 +625,10 @@
         "kind": "bash_entrypoint"
       },
       "_origin": "ast",
-      "id": "test_two_node_sh__entry",
       "community": 4,
-      "norm_label": "two-node.sh script"
+      "norm_label": "two-node.sh script",
+      "id": "test_two_node_sh__entry",
+      "community_name": "two-node.sh"
     },
     {
       "label": "rpc()",
@@ -463,9 +640,10 @@
         "kind": "bash_function"
       },
       "_origin": "ast",
-      "id": "test_two_node_rpc",
       "community": 4,
-      "norm_label": "rpc()"
+      "norm_label": "rpc()",
+      "id": "test_two_node_rpc",
+      "community_name": "two-node.sh"
     },
     {
       "label": "cleanup()",
@@ -477,21 +655,88 @@
         "kind": "bash_function"
       },
       "_origin": "ast",
-      "id": "test_two_node_cleanup",
       "community": 4,
-      "norm_label": "cleanup()"
+      "norm_label": "cleanup()",
+      "id": "test_two_node_cleanup",
+      "community_name": "two-node.sh"
     }
   ],
   "links": [
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "sidecar/index.js",
-      "source_location": "L18",
+      "source_file": "BRIDGE.md",
+      "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "sidecar_index",
-      "target": "sidecar_index_arg",
+      "source": "bridge",
+      "target": "bridge_keets_bridge_protocol_msg_keets_preamble",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "BRIDGE.md",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bridge_keets_bridge_protocol_msg_keets_preamble",
+      "target": "bridge_bootstrap",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "BRIDGE.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bridge_keets_bridge_protocol_msg_keets_preamble",
+      "target": "bridge_flow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "BRIDGE.md",
+      "source_location": "L45",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bridge_keets_bridge_protocol_msg_keets_preamble",
+      "target": "bridge_java_side_acceptance_rules_all_must_hold_else_disconnect",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "BRIDGE.md",
+      "source_location": "L31",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bridge_keets_bridge_protocol_msg_keets_preamble",
+      "target": "bridge_msg_keets_frame_74_bytes_total",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "BRIDGE.md",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bridge_keets_bridge_protocol_msg_keets_preamble",
+      "target": "bridge_sidecar_files_under_datadir_keets",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "BRIDGE.md",
+      "source_location": "L60",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "bridge_keets_bridge_protocol_msg_keets_preamble",
+      "target": "bridge_topics",
       "confidence_score": 1.0
     },
     {
@@ -502,6 +747,17 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
+      "target": "sidecar_index_arg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L36",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
       "target": "sidecar_index_bootstrap",
       "confidence_score": 1.0
     },
@@ -509,7 +765,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L26",
+      "source_location": "L35",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -520,18 +776,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L15",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "sidecar_index",
-      "target": "sidecar_index_crypto",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "sidecar/index.js",
-      "source_location": "L23",
+      "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -542,7 +787,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L11",
+      "source_location": "L19",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -553,18 +798,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L13",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "sidecar_index",
-      "target": "sidecar_index_fs",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "sidecar/index.js",
-      "source_location": "L10",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -575,7 +809,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L39",
+      "source_location": "L56",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -586,7 +820,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L49",
+      "source_location": "L67",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -597,7 +831,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L25",
+      "source_location": "L34",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -608,7 +842,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L50",
+      "source_location": "L68",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -619,18 +853,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L12",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "sidecar_index",
-      "target": "sidecar_index_net",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "sidecar/index.js",
-      "source_location": "L70",
+      "source_location": "L88",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -641,18 +864,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L14",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "sidecar_index",
-      "target": "sidecar_index_path",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "sidecar/index.js",
-      "source_location": "L22",
+      "source_location": "L31",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -663,7 +875,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L55",
+      "source_location": "L73",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -674,7 +886,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L41",
+      "source_location": "L58",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -685,7 +897,29 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L72",
+      "source_location": "L49",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_sha256",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_sodium",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
+      "source_location": "L90",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -696,7 +930,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L32",
+      "source_location": "L43",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -707,7 +941,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L100",
+      "source_location": "L122",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -718,18 +952,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/package.json",
-      "source_location": "L10",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "sidecar_package",
-      "target": "sidecar_package_author",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "sidecar/package.json",
-      "source_location": "L13",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_package",
@@ -751,18 +974,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/package.json",
-      "source_location": "L9",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "sidecar_package",
-      "target": "sidecar_package_keywords",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "sidecar/package.json",
-      "source_location": "L11",
+      "source_location": "L6",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_package",
@@ -795,18 +1007,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/package.json",
-      "source_location": "L6",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "sidecar_package",
-      "target": "sidecar_package_scripts",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "sidecar/package.json",
-      "source_location": "L12",
+      "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_package",
@@ -828,18 +1029,51 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/package.json",
-      "source_location": "L7",
+      "source_location": "L9",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "sidecar_package_scripts",
-      "target": "sidecar_package_scripts_test",
+      "source": "sidecar_package_dependencies",
+      "target": "sidecar_package_dependencies_bare_fs",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/package.json",
-      "source_location": "L14",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package_dependencies",
+      "target": "sidecar_package_dependencies_bare_path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package_dependencies",
+      "target": "sidecar_package_dependencies_bare_process",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package_dependencies",
+      "target": "sidecar_package_dependencies_bare_tcp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_package_dependencies",
@@ -850,7 +1084,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/package.json",
-      "source_location": "L15",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_package_dependencies",
@@ -858,10 +1092,69 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_package_dependencies",
+      "target": "sidecar_package_dependencies_sodium_universal",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/package.json",
-      "source_location": "L14",
+      "source_location": "L9",
+      "weight": 1.0,
+      "context": "import",
+      "_origin": "ast",
+      "source": "sidecar_package_dependencies_bare_fs",
+      "target": "bare_fs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L10",
+      "weight": 1.0,
+      "context": "import",
+      "_origin": "ast",
+      "source": "sidecar_package_dependencies_bare_path",
+      "target": "bare_path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L11",
+      "weight": 1.0,
+      "context": "import",
+      "_origin": "ast",
+      "source": "sidecar_package_dependencies_bare_process",
+      "target": "bare_process",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L12",
+      "weight": 1.0,
+      "context": "import",
+      "_origin": "ast",
+      "source": "sidecar_package_dependencies_bare_tcp",
+      "target": "bare_tcp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L13",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
@@ -873,12 +1166,24 @@
       "relation": "imports",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/package.json",
-      "source_location": "L15",
+      "source_location": "L14",
       "weight": 1.0,
       "context": "import",
       "_origin": "ast",
       "source": "sidecar_package_dependencies_hyperswarm",
       "target": "hyperswarm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/package.json",
+      "source_location": "L15",
+      "weight": 1.0,
+      "context": "import",
+      "_origin": "ast",
+      "source": "sidecar_package_dependencies_sodium_universal",
+      "target": "sodium_universal",
       "confidence_score": 1.0
     },
     {
@@ -888,9 +1193,9 @@
       "source_location": "L3",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "test_bootstrap",
-      "target": "test_bootstrap_dht",
-      "confidence_score": 1.0
+      "target": "test_bootstrap_dht"
     },
     {
       "relation": "contains",
@@ -899,9 +1204,9 @@
       "source_location": "L5",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "test_bootstrap",
-      "target": "test_bootstrap_node",
-      "confidence_score": 1.0
+      "target": "test_bootstrap_node"
     },
     {
       "relation": "contains",
@@ -910,9 +1215,9 @@
       "source_location": "L4",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "test_bootstrap",
-      "target": "test_bootstrap_port",
-      "confidence_score": 1.0
+      "target": "test_bootstrap_port"
     },
     {
       "relation": "defines",
@@ -921,9 +1226,9 @@
       "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "test_two_node",
-      "target": "test_two_node_cleanup",
-      "confidence_score": 1.0
+      "target": "test_two_node_cleanup"
     },
     {
       "relation": "defines",
@@ -932,9 +1237,9 @@
       "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "test_two_node",
-      "target": "test_two_node_rpc",
-      "confidence_score": 1.0
+      "target": "test_two_node_rpc"
     },
     {
       "relation": "contains",
@@ -943,9 +1248,9 @@
       "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "test_two_node",
-      "target": "test_two_node_sh__entry",
-      "confidence_score": 1.0
+      "target": "test_two_node_sh__entry"
     },
     {
       "relation": "calls",
@@ -955,10 +1260,11 @@
       "weight": 1.0,
       "context": "call",
       "_origin": "ast",
+      "confidence_score": 1.0,
       "source": "test_two_node_sh__entry",
-      "target": "test_two_node_rpc",
-      "confidence_score": 1.0
+      "target": "test_two_node_rpc"
     }
   ],
-  "hyperedges": []
+  "hyperedges": [],
+  "built_at_commit": "dfacae43879f0b172666609d2226237a3d70dcbb"
 }

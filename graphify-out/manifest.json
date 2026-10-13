@@ -1,13 +1,13 @@
 {
   "sidecar/index.js": {
-    "mtime": 1791808644.8220294,
-    "ast_hash": "b7d26c4682ca251e0f202e91669f0c39",
-    "semantic_hash": "b7d26c4682ca251e0f202e91669f0c39"
+    "mtime": 1791835758.241231,
+    "ast_hash": "3e64ab954d566f2e350554edf37c77b1",
+    "semantic_hash": ""
   },
   "sidecar/package.json": {
-    "mtime": 1791808657.4106793,
-    "ast_hash": "9459975446bd7e2f0b8e76adb247b0ed",
-    "semantic_hash": "9459975446bd7e2f0b8e76adb247b0ed"
+    "mtime": 1791834864.1832235,
+    "ast_hash": "f922594fb8a9e22de90f6a91f01bbdaf",
+    "semantic_hash": ""
   },
   "test/bootstrap.js": {
     "mtime": 1791808861.8211715,
@@ -18,5 +18,15 @@
     "mtime": 1791808997.1837764,
     "ast_hash": "35e3e1753d4316a21ceeaae3fbc5e9da",
     "semantic_hash": "35e3e1753d4316a21ceeaae3fbc5e9da"
+  },
+  "BRIDGE.md": {
+    "mtime": 1791836293.5561044,
+    "ast_hash": "e709dd9b7f08727fe6676798b9e2432d",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1791829224.0567076,
+    "ast_hash": "9b6c87cbbb01b2c5dbee095d70ff054a",
+    "semantic_hash": ""
   }
 }

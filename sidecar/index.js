@@ -15,6 +15,14 @@
 
 const IS_BARE = typeof Bare !== 'undefined'
 
+// On bare an uncaught error ABORTS the host process — inside a bare-kit worklet that
+// takes the whole Android app down with SIGABRT (proven on-device 2026-10-13, missing
+// addon). The node hosting us must never die for the sidecar: log and keep running.
+if (IS_BARE) {
+  Bare.on('uncaughtException', (err) => { console.error('keets uncaught:', err) })
+  Bare.on('unhandledRejection', (err) => { console.error('keets unhandled:', err) })
+}
+
 const Hyperswarm = require('hyperswarm')
 const DHT = require('hyperdht')
 const sodium = require('sodium-universal')
