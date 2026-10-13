@@ -205,10 +205,21 @@
       "norm_label": "preamble()"
     },
     {
+      "label": "hb",
+      "file_type": "code",
+      "source_file": "sidecar/index.js",
+      "source_location": "L99",
+      "_origin": "ast",
+      "id": "sidecar_index_hb",
+      "community": 0,
+      "community_name": "index.js",
+      "norm_label": "hb"
+    },
+    {
       "label": "opts",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L96",
+      "source_location": "L104",
       "_origin": "ast",
       "id": "sidecar_index_opts",
       "community": 0,
@@ -219,7 +230,7 @@
       "label": "swarm",
       "file_type": "code",
       "source_file": "sidecar/index.js",
-      "source_location": "L98",
+      "source_location": "L107",
       "_origin": "ast",
       "id": "sidecar_index_swarm",
       "community": 0,
@@ -721,6 +732,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
+      "source_location": "L99",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "sidecar_index",
+      "target": "sidecar_index_hb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "sidecar/index.js",
       "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
@@ -776,7 +798,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L96",
+      "source_location": "L104",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -842,7 +864,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L98",
+      "source_location": "L107",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -864,7 +886,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "sidecar/index.js",
-      "source_location": "L130",
+      "source_location": "L140",
       "weight": 1.0,
       "_origin": "ast",
       "source": "sidecar_index",
@@ -1266,5 +1288,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "ff0180a2c88baefe51aae76aa5b8cad2a0c81446"
+  "built_at_commit": "694ac5ca587d6dfdb4a85e17256ebf8c69bc932e"
 }

@@ -47,6 +47,29 @@ so MiniDapp webviews can call it directly.
 An NFT's on-chain state stores the `keets://<drivekey>/<path>?hash=<sha256>` URL —
 hash-pinned content, strictly stronger than an HTTP URL.
 
+## Node bridge: the `keets` command + `KEETS` MDS event
+
+For apps that talk to the Minima node rather than the sidecar directly (MiniDapps,
+web pages, APKs), minima-core (main `ea37438033` / keets-android `686d2c504d`) exposes
+the whole thing as one RPC command — the node holds the API token, apps never see it,
+and node RPC already sends open CORS so a plain web page can use it:
+
+```
+keets action:info | send (to:, message:|datahex:) | inbox | ack (id:)
+      | publish (path:, datahex:) | fetch (url:) | pin (url:) | pins | unpin (drive:)
+```
+
+Inbound consumption has two modes:
+- **MDS enabled**: the node polls the sidecar inbox every 5s and pushes each message
+  as MDS event `KEETS` `{id, from, ts, payload b64, message utf8, via}`, acking after
+  the event posts (a dapp's service.js persists them — see mds/keetchat).
+- **No MDS** (the family node lines — MDS is stripped): the node does NOT auto-drain;
+  apps poll `keets action:inbox` and `action:ack` what they have stored.
+
+Reference app: `mds/keetchat` — one page that runs as an MDS MiniDapp or as a plain
+RPC page (`index.html?rpc=http://127.0.0.1:<rpcport>`), with the full integration
+contract in its README.
+
 ## Wire protocol (KTS1)
 
 Service connections are HyperDHT Noise streams to a node's **main** keets pubkey:

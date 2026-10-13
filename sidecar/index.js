@@ -62,7 +62,7 @@ const BOOTSTRAP = arg('bootstrap', '').split(',').filter(Boolean).map(s => {
 
 // env on desktop (never argv — visible in ps); --token only inside a bare-kit worklet,
 // whose arguments live in process memory, not /proc cmdline.
-const TOKEN = (process.env.KEETS_TOKEN || arg('token', '')).replace(/^0x/i, '')
+const TOKEN = (process.env.KEETS_TOKEN || arg('token', '')).replace(/^0x/i, '').toLowerCase()
 if (TOKEN.length !== 64) {
   console.error('KEETS_TOKEN env var missing or invalid — refusing to start')
   process.exit(1)
