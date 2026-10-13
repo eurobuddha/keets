@@ -14,6 +14,7 @@
 // Keep every require specifier a string literal so bare-pack can preresolve them.
 
 const IS_BARE = typeof Bare !== 'undefined'
+const VERSION = '1.2.0'
 
 // On bare an uncaught error ABORTS the host process — inside a bare-kit worklet that
 // takes the whole Android app down with SIGABRT (proven on-device 2026-10-13, missing
@@ -41,6 +42,19 @@ const DATADIR = arg('datadir', '.')
 const TOPIC = arg('topic', 'minima-mainnet-keets-v1')
 const MAXCONNS = parseInt(arg('maxconns', '6'))
 const CONNECT = arg('connect', '').split(',').filter(Boolean)
+const APIPORT = parseInt(arg('apiport', String(PORT + 5)))
+// default store-and-forward mailboxes: the publicIPnodes fleet's keets-mailbox daemons
+// (deployed 2026-10-13, UDP 49738). Untrusted sealed storage — they cannot read, alter
+// or forge messages. Anyone can run one; --mailboxes prepends/overrides.
+const DEFAULT_MAILBOXES = [
+  '7f84f689d4477395d7c4a2493852a56fe646a8d05a94ce8b0a1baae34ac5d1df', // sally
+  '9161e165df60ee780776363143701a82a2e8fb3792a0eea58577b1e4adbb35fd', // eurobuddha
+  '3fb497a4eb9ae7681d5967b5fe4c6a56ecd2cd64f0357bd435115fe54dbad6e4', // maxima
+  'a5335d9c6d663f8f9d97c6c65750220de479140a627ed317bb200f3167ddd4c6', // openproject
+  '5febd9d332b310ec8a0baa0eacb53dc82e86f9ed77e0954fd494e2ede010693d', // vigilance
+  '7e63777e3a53a97363b7b6faa16af6d08a315ecca40b76f8352165c52e139221'  // megammr
+]
+const MAILBOXES = arg('mailboxes', '').split(',').filter(Boolean).concat(DEFAULT_MAILBOXES)
 const BOOTSTRAP = arg('bootstrap', '').split(',').filter(Boolean).map(s => {
   const ix = s.lastIndexOf(':')
   return { host: s.slice(0, ix), port: parseInt(s.slice(ix + 1)) }
@@ -101,29 +115,37 @@ const hb = setInterval(() => {
   if (hbn >= 12) clearInterval(hb)
 }, 5000)
 
-const opts = { keyPair }
-if (BOOTSTRAP.length) opts.bootstrap = BOOTSTRAP
 console.log('keets step: creating swarm')
-const swarm = new Hyperswarm(opts)
+const dht = new DHT(BOOTSTRAP.length ? { bootstrap: BOOTSTRAP } : {})
+const swarm = new Hyperswarm({ dht, keyPair })
 console.log('keets step: swarm created')
 
+// --- services (media hosting + messages) on top of the same DHT ------------
+const wire = require('./wire')
+const media = require('./media')({ keetsdir, seed, bootstrap: BOOTSTRAP, maxconns: 8 })
+const messages = require('./messages')({ keetsdir, dht, keyPair, mailboxes: MAILBOXES })
+
 let conns = 0
-swarm.on('connection', (conn, info) => {
+let svcConns = 0
+const SVC_MAX = 16
+
+function bridge (conn, publicKey, initiator, replay) {
   if (conns >= MAXCONNS) {
     conn.destroy()
     return
   }
   conns++
-  const pk = '0x' + info.publicKey.toString('hex')
+  const pk = '0x' + publicKey.toString('hex')
   // path = the UDP endpoint actually carrying the bytes: the peer itself after a
   // successful hole punch, or a DHT relay node when punching failed (CGNAT fallback).
   const raw = conn.rawStream
   const via = raw && raw.remoteHost ? raw.remoteHost + ':' + raw.remotePort : 'unknown'
-  console.log('peer connected pubkey:' + pk + ' initiator:' + conn.isInitiator + ' path:' + via + ' conns:' + conns)
+  console.log('peer connected pubkey:' + pk + ' initiator:' + initiator + ' path:' + via + ' conns:' + conns)
 
   const tcp = net.connect(PORT, '127.0.0.1')
   tcp.on('connect', () => {
-    tcp.write(preamble(info.publicKey, conn.isInitiator))
+    tcp.write(preamble(publicKey, initiator))
+    if (replay && replay.length) tcp.write(replay)
     conn.pipe(tcp)
     tcp.pipe(conn)
   })
@@ -135,6 +157,37 @@ swarm.on('connection', (conn, info) => {
     console.log('peer closed pubkey:' + pk + ' conns:' + conns)
   })
   tcp.on('close', () => conn.destroy())
+}
+
+swarm.on('connection', (conn, info) => {
+  conn.on('error', () => {})
+  // We initiated: always a Minima link (our service dials go out via dht.connect,
+  // never through the swarm) — bridge immediately, our Java greets first.
+  if (conn.isInitiator) return bridge(conn, info.publicKey, true, null)
+  // Accepted: peek the first bytes to route. A Minima initiator's first wire byte is
+  // the high byte of a 4-byte BE frame length — 0x00 — while services open with 'KTS1'.
+  // Deployed pre-1.2.0 peers never send the magic, so they route to the bridge unchanged.
+  let buf = Buffer.alloc(0)
+  const timer = setTimeout(() => { done(); bridge(conn, info.publicKey, false, buf) }, 15000)
+  function done () { clearTimeout(timer); conn.removeListener('data', ondata) }
+  function ondata (d) {
+    buf = Buffer.concat([buf, d])
+    if (buf[0] !== 0x4b) { // not 'K' — Minima
+      done()
+      return bridge(conn, info.publicKey, false, buf)
+    }
+    if (buf.length < 5) return
+    done()
+    if (buf.slice(0, 4).equals(wire.MAGIC) && buf[4] === wire.SVC_MSG && buf.length === 5) {
+      if (svcConns >= SVC_MAX) return conn.destroy()
+      svcConns++
+      conn.on('close', () => svcConns--)
+      messages.handleConn(conn)
+    } else {
+      conn.destroy()
+    }
+  }
+  conn.on('data', ondata)
 })
 
 const topic = sha256(Buffer.from(TOPIC))
@@ -146,6 +199,16 @@ for (const pk of CONNECT) {
 }
 
 console.log('keets sidecar up — pubkey:0x' + mypub + ' topic:' + TOPIC + ' node:127.0.0.1:' + PORT)
+
+// --- loopback API for apps (media hosting + messaging) ---------------------
+// token also written to a file so host apps that own the datadir can pick it up
+fs.writeFileSync(path.join(keetsdir, 'apitoken'), TOKEN + '\n', { mode: 0o600 })
+require('./api')({ port: APIPORT, token: TOKEN, mypub, media, messages, version: VERSION })
+media.start().then(
+  (st) => console.log('keets media up — drive:' + st.drive + ' pins:' + st.pins),
+  (e) => console.error('keets media failed: ' + e.message)
+)
+messages.start()
 let flushed = false
 swarm.flush().then(
   () => { flushed = true; console.log('swarm flushed — announced on DHT') },
@@ -169,7 +232,8 @@ setTimeout(() => {
 // NEVER under bare: a worklet's fd 0 is /dev/null, which EOFs instantly — this very
 // hook silently exited the worklet ~100ms after startup (proven on Fold 2026-10-13).
 // The host app owns a worklet's lifecycle (Worklet.terminate), not stdin.
-if (!IS_BARE && process.stdin && typeof process.stdin.resume === 'function') {
+// KEETS_STDIN_EXIT=0 disables it (tests / running the sidecar standalone in a shell).
+if (!IS_BARE && process.env.KEETS_STDIN_EXIT !== '0' && process.stdin && typeof process.stdin.resume === 'function') {
   process.stdin.resume()
   process.stdin.on('end', () => process.exit(0))
   process.stdin.on('close', () => process.exit(0))

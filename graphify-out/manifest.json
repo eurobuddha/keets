@@ -1,12 +1,12 @@
 {
   "sidecar/index.js": {
-    "mtime": 1791879774.0642998,
-    "ast_hash": "68b6be4c946608a5c273d0cf77064d21",
+    "mtime": 1791881383.5112073,
+    "ast_hash": "8bc9a7b2106fbaf86a84480040105502",
     "semantic_hash": ""
   },
   "sidecar/package.json": {
-    "mtime": 1791879789.3904974,
-    "ast_hash": "816465315417aac503b1f15a9f66a4b0",
+    "mtime": 1791881391.0113778,
+    "ast_hash": "d9ae14268034fe740bc9366debd8a793",
     "semantic_hash": ""
   },
   "test/bootstrap.js": {

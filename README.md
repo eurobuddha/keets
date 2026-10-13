@@ -9,10 +9,16 @@ become first-class peers on the existing mainnet; classic nodes are unaffected.
 
 | piece | where |
 |---|---|
-| Sidecar (Node.js, hyperswarm) | `sidecar/index.js` |
+| Sidecar (Node.js + bare, hyperswarm) | `sidecar/index.js` |
 | Bridge protocol spec (the Android contract) | `BRIDGE.md` |
+| Services: media hosting + messages (spec + API) | `SERVICES.md` |
+| Media (Hyperdrive host/fetch/pin) | `sidecar/media.js` |
+| Messages (direct + mailbox store-and-forward) | `sidecar/messages.js`, `sidecar/wire.js` |
+| App loopback API (port+5, token-authed) | `sidecar/api.js` |
+| Mailbox daemon (fleet, node-only) | `sidecar/mailbox.js` |
 | Java node changes | `core/minima-core` branch **`keets`** (worktree: `_worktrees/minima-core-keets`) |
 | Two-node loopback test | `test/two-node.sh` |
+| Services test (media + messages + mailbox) | `test/services-test.sh` |
 
 ## How it works
 
@@ -22,6 +28,17 @@ preamble (type 24, per-boot auth token + remote pubkey) flags the connection and
 peer a synthetic `127.113.x.y` identity derived from its public key. After that it's the
 untouched Minima protocol: greeting, IBD, txpow gossip. Keets peers are invisible to the
 classic P2P walk — hyperswarm does its own discovery, reconnection and hole punching.
+
+## Services (sidecar 1.2.0): host media + message by pubkey — no server
+
+On top of the same transport the sidecar provides two app-facing services via a loopback
+HTTP API on `127.0.0.1:<minima port + 5>` (token-authed, CORS-open — a MiniDapp or APK
+calls it directly): **media hosting** — `POST /media/<path>` returns a hash-pinned
+`keets://` URL served P2P from the device over Hyperdrive, with every fetcher re-seeding
+and optional permanent pins — and **messages** — `POST /message` delivers E2E-encrypted
+to a keets pubkey directly when online, else sealed into fleet-run mailbox nodes the
+recipient drains on its next start. Full spec and API table: `SERVICES.md`. Verified live
+on the mainnet DHT 2026-10-13.
 
 ## Run a node
 

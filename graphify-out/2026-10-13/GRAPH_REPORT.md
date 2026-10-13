@@ -1,7 +1,7 @@
-# Graph Report - keets  (2026-10-12)
+# Graph Report - keets  (2026-10-13)
 
 ## Corpus Check
-- 6 files · ~2,265 words
+- 6 files · ~2,330 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `dfacae43`
+- Built from commit: `ff0180a2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -69,7 +69,7 @@ Cohesion: 0.67
 Nodes (3): bare-tcp, dependencies, bare-tcp
 
 ## Knowledge Gaps
-- **38 isolated node(s):** `Flow`, `MSG_KEETS frame (74 bytes total)`, `Java-side acceptance rules (all must hold, else disconnect)`, `Sidecar files (under `<datadir>/keets/`)`, `Topics` (+33 more)
+- **38 isolated node(s):** `Hyperswarm`, `DHT`, `sodium`, `PORT`, `DATADIR` (+33 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -80,7 +80,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.114) - this node is a cross-community bridge._
 - **Why does `bare-fs` connect `bare-fs` to `dependencies`?**
   _High betweenness centrality (0.013) - this node is a cross-community bridge._
-- **What connects `Flow`, `MSG_KEETS frame (74 bytes total)`, `Java-side acceptance rules (all must hold, else disconnect)` to the rest of the system?**
+- **What connects `Hyperswarm`, `DHT`, `sodium` to the rest of the system?**
   _38 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `index.js` be split into smaller, more focused modules?**
   _Cohesion score 0.1 - nodes in this community are weakly interconnected._
