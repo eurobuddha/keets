@@ -140,3 +140,26 @@ IPs are only where they happen to run today.
   tamper rejection, direct message + ack, offline → mailbox → restart → fetch.
 - `test/two-node.sh` — the Minima bridge regression (unchanged, still passes with the
   peek routing).
+
+### Salon public hosting (sidecar 1.2.1)
+
+`/info` now advertises `boundedMedia: true` and `salondrive`. The existing `drive`
+remains the attachment drive; its identity and old links are unchanged. Publishing
+paths beginning `/salon/` uses a separate Hyperdrive namespace so a public profile
+link does not reveal the drive containing chat attachments. `GET /files?scope=salon`
+lists public Salon files; deleting `/media/salon/...` targets that same public drive.
+
+`GET /media?url=...&maxbytes=N` checks the signed Hyperdrive entry size before
+loading the blob. N must be an integer from 1 through 64 MiB; omitted means 64 MiB.
+The read uses that exact checked entry, checks the completed byte length, retains
+hash verification, and cancels its own outstanding reads at the 30-second deadline.
+Mutable profile reads update the drive before looking up the current path.
+
+Salon applies a smaller 24 MiB aggregate profile allowance (JSON plus unique media),
+with a 1 MiB JSON ceiling and 8 MiB image-reader ceiling. These are Salon rules,
+not changes to existing chat upload limits. Public profile/media is not confidential;
+other peers can retain copies. Removing a local file cannot recall those copies.
+
+Verification: `node --test test/media-limits-test.js` and
+`KEETS_MEDIA_ONLY=1 KEETS_TEST_DIR=<fresh-test-directory> bash test/services-test.sh`.
+The latter reuses the private two-sidecar fixture and skips message transmission.

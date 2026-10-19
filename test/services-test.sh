@@ -86,6 +86,27 @@ BADURL="${URL%\?hash=*}?hash=$(printf '0%.0s' {1..64})"
 BAD=$(curl -s -H "x-keets-token: $TOK_B" "127.0.0.1:7206/media?url=$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$BADURL")")
 check "hash mismatch rejected" "$(echo "$BAD" | grep -q 'mismatch\|error' && echo true || echo false)"
 
+echo "== media limits and mutable profile updates"
+LIMITED=$(curl --max-time 40 -s -H "x-keets-token: $TOK_B" "127.0.0.1:7206/media?url=$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$URL")&maxbytes=99999")
+check "oversized media refused" "$(echo "$LIMITED" | grep -q 'size limit' && echo true || echo false)"
+PROFILE=$(api 7106 $TOK_A POST /media/salon/test/profile.json '{"name":"before"}')
+PROFILE_URL=$(echo "$PROFILE" | sed -n 's/.*"url":"\([^?]*\)?hash=.*/\1/p')
+PROFILE_DRIVE=$(echo "$PROFILE" | sed -n 's/.*"drive":"\([^"]*\)".*/\1/p')
+PRIVATE_DRIVE=$(echo "$PUB" | sed -n 's/.*"drive":"\([^"]*\)".*/\1/p')
+check "public Salon drive is separate from attachment drive" "$([ -n "$PROFILE_DRIVE" ] && [ "$PROFILE_DRIVE" != "$PRIVATE_DRIVE" ] && echo true || echo false)"
+INFO=$(api 7106 $TOK_A GET /info)
+check "API advertises isolated bounded Salon hosting" "$(echo "$INFO" | grep -q '"boundedMedia":true' && echo "$INFO" | grep -q '"salondrive":' && echo true || echo false)"
+PROFILE_QUERY=$(python3 -c "import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1],safe=''))" "$PROFILE_URL")
+BEFORE=$(curl --max-time 40 -s -H "x-keets-token: $TOK_B" "127.0.0.1:7206/media?url=$PROFILE_QUERY&maxbytes=1024")
+check "profile initially readable" "$(echo "$BEFORE" | grep -q 'before' && echo true || echo false)"
+api 7106 $TOK_A POST /media/salon/test/profile.json '{"name":"after"}' > /dev/null
+AFTER=$(curl --max-time 40 -s -H "x-keets-token: $TOK_B" "127.0.0.1:7206/media?url=$PROFILE_QUERY&maxbytes=1024")
+check "stable profile sees the updated content" "$(echo "$AFTER" | grep -q 'after' && echo true || echo false)"
+if [ "${KEETS_MEDIA_ONLY:-0}" = "1" ]; then
+  [ $FAIL = 0 ] && echo "ALL MEDIA TESTS PASSED" || echo "SOME MEDIA TESTS FAILED"
+  exit $FAIL
+fi
+
 echo "== TEST 4: direct message B -> A"
 R=$(api 7206 $TOK_B POST /message "{\"to\":\"$APK\",\"payload\":\"hello from B\"}")
 echo "   send: $R"
