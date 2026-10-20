@@ -73,7 +73,7 @@ module.exports = function startApi ({ port, token, mypub, media, messages, versi
       // whose key is null, a half-opened store); when it does, still return the pubkey so
       // `keets action:info` succeeds and the app doesn't stick on "Node starting".
       let st = {}
-      try { st = await media.start() } catch (e) { st = { error: e.message } } // idempotent: returns own drive key
+      try { st = await media.start() } catch (e) {} // idempotent; on failure keep st={} and return the pubkey only (the error stays server-side)
       return send(res, 200, { pubkey: '0x' + mypub, drive: st.drive || null, salondrive: st.salondrive || null, apiport: port, version, boundedMedia: true })
     }
 
@@ -91,7 +91,8 @@ module.exports = function startApi ({ port, token, mypub, media, messages, versi
           if (!m) return send(res, 400, { error: 'need ?url=keets://... or /media/<drivekey>/<path>' })
           url = 'keets://' + m[1] + m[2] + (query.hash ? '?hash=' + query.hash : '')
         }
-        const maxBytes = query.maxbytes === undefined ? undefined : Number(query.maxbytes)
+        // empty/absent -> default cap; otherwise the value is range-validated in readMedia()
+        const maxBytes = (query.maxbytes === undefined || query.maxbytes === '') ? undefined : Number(query.maxbytes)
         const buf = await media.fetch(url, maxBytes)
         const ext = url.split('?')[0].split('.').pop().toLowerCase()
         return send(res, 200, buf, TYPES[ext] || 'application/octet-stream')
