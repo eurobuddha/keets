@@ -1,0 +1,39 @@
+Keets 1.2.2 — media storage recovery — 2026-10-20
+
+Observed: Pandamonium chat image POST returned HTTP 500, "The corestore is closed".
+App restart restored uploads. The original Fold storage-open error was not retained;
+a retained native OOM report cannot establish the cause of this particular failure.
+
+History: real filesystem-lock reproduction fails before and after Salon:
+- d5bab15 (before Salon): release the lock, later publish still reports ELOCKED.
+- 79ee38c (Salon): release the lock, later publish reports Corestore closed.
+The unrecoverable singleton dates to original media hosting (96a12fd). Salon's
+owned-drive retry changes the subsequent error, not the existence of this defect.
+This proves recovery failure, not that a lock caused the Fold incident.
+
+Reuse: sidecar/media.js ownedDrives opening-promise pattern; Corestore's existing
+ready/close and same on-disk path; existing Hyperdrive namespaces and swarm discovery.
+One shared reopening operation replaces a closed/failed instance. It preserves the
+primary key, chat and Salon drive identities, files, and pin list, re-advertises old
+discovery topics and resumes pins. Only media replication connections are restarted.
+Initial storage errors remain visible; no destructive directory reset, automatic
+message resend, dependency update, or memory-limit change is included.
+
+Validation:
+- node --test test/media-recovery-test.js test/media-limits-test.js: 11 pass.
+  Five storage cases use real locked files; network-only classes are stubbed.
+- node test/media-recovery-p2p.js 45991: all seven real peer checks pass.
+- bare test/media-recovery-p2p.js 45992: all seven pass, Bare 1.34.1.
+  Real private DHT peers, synthetic media, retained bytes/identities, disconnect and
+  reconnect, then recovery of a failed open after another owner releases its lock.
+- KEETS_MEDIA_ONLY=1 test/services-test.sh: all media API cases pass (auth,
+  byte-exact fetch, hash rejection, size bound, isolated Salon drive, mutable profile).
+- Before fix the original four storage regression tests fail.
+
+Code review
+Summary: recovery preserves the existing storage and validation contracts. Shared
+opening and stale-generation checks prevent concurrent requests using old handles.
+Finding resolved: a chat-triggered recovery initially lost Salon/mirror discovery;
+reopening now restores those subscriptions, with a regression test for pinned drives.
+Verdict: approve. No outstanding blocking findings. Actual Android packaging and
+on-device startup are validated in the host application's release record.
