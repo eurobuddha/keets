@@ -68,8 +68,13 @@ module.exports = function startApi ({ port, token, mypub, media, messages, versi
     }
 
     if (req.method === 'GET' && pathname === '/info') {
-      const st = await media.start() // idempotent: returns own drive key
-      return send(res, 200, { pubkey: '0x' + mypub, drive: st.drive, salondrive: st.salondrive, apiport: port, version, boundedMedia: true })
+      // The pubkey is the keets identity — the Chat "my address" sheet needs it and must
+      // NOT depend on the media drive being ready. media.start() can throw (a Hyperdrive
+      // whose key is null, a half-opened store); when it does, still return the pubkey so
+      // `keets action:info` succeeds and the app doesn't stick on "Node starting".
+      let st = {}
+      try { st = await media.start() } catch (e) { st = { error: e.message } } // idempotent: returns own drive key
+      return send(res, 200, { pubkey: '0x' + mypub, drive: st.drive || null, salondrive: st.salondrive || null, apiport: port, version, boundedMedia: true })
     }
 
     if (pathname === '/media' || pathname.startsWith('/media/')) {
