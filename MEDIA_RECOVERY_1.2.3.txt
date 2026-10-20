@@ -1,0 +1,27 @@
+Keets1.2.3 — combined /info hardening and media recovery —2026-10-20
+
+Base:718b752734e691313a8c57eeeaabd8904305d035, the other agent's /info hardening.
+Reuse:d10f32afd81f48c1bf66c2b7a7bdf6231b2586d9 storage recovery, imported unchanged.
+sidecar/api.js is byte-identical to718b752; sidecar/media.js is byte-identical to
+d10f32a. Both fixes coexist; index/package/lock versions are aligned at1.2.3.
+No dependency versions changed.1.2.3 distinguishes this combined source from the
+two earlier branches that independently reported1.2.2.
+
+Validation:
+- node --test test/media-recovery-test.js test/media-limits-test.js:12passed.
+- New actual HTTP regression: unauthenticated /info401; authenticated /info200 with
+  identity and null drives during a real filesystem lock; upload500 while locked;
+  after release, upload200 on the same storage/drive, /info shows original drive
+  identities, previously saved attachment fetched byte-exact. No process restart.
+- Existing real private-peer recovery suite:7checks passed on Node,7on Bare1.34.1.
+- Existing media-only services suite: all passed, including authentication, exact
+  bytes, hash rejection, size bounds, isolated Salon drive and mutable profile.
+All content/identities disposable and synthetic. No user messages or transactions.
+
+Code review
+Summary: preserves the other's /info implementation and reuses the previously
+reviewed/tested recovery implementation without a rewrite. Added HTTP test covers
+the exact intersection of those changes. Separate version removes source ambiguity.
+Findings: no blocking findings. The original Fold closure trigger remains unproven;
+this fixes the reproduced permanently failed store condition, not a claimed cause.
+Verdict: approve. BlackBear host integration must start from2.0.28/b908df82.
