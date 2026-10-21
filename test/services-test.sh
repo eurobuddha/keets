@@ -129,7 +129,10 @@ BPID=$(start_sidecar b 7201 $TOK_B)
 for i in $(seq 1 40); do api 7206 $TOK_B GET /messages 2>/dev/null | grep -q 'payload' && break; sleep 1; done
 INBOX=$(api 7206 $TOK_B GET /messages)
 echo "   B inbox after restart: $INBOX"
-check "B fetched stored message (sender verified)" "$(echo "$INBOX" | grep -q "$(echo -n 'offline msg for B' | base64)" && echo "$INBOX" | grep -qi "\"from\":\"$APK\"" && echo "$INBOX" | grep -q '"via":"mailbox"' && echo true || echo false)"
+# 1.2.6: the sender's direct dial keeps racing after the mailbox store, so a peer that comes
+# back within the dial window may receive the copy direct (via:"direct") or from the mailbox
+# (via:"mailbox"/"mailbox-push") - either proves nothing was lost; receivers dedupe by id.
+check "B received the offline message after restart (sender verified)" "$(echo "$INBOX" | grep -q "$(echo -n 'offline msg for B' | base64)" && echo "$INBOX" | grep -qi "\"from\":\"$APK\"" && echo "$INBOX" | grep -qE '"via":"(mailbox|mailbox-push|direct)"' && echo true || echo false)"
 
 echo
 [ $FAIL = 0 ] && echo "ALL TESTS PASSED" || echo "SOME TESTS FAILED"
