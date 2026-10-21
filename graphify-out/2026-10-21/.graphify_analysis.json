@@ -1,0 +1,124 @@
+{
+  "communities": {
+    "0": [
+      "sidecar_index",
+      "sidecar_index_arg",
+      "sidecar_index_bootstrap",
+      "sidecar_index_connect",
+      "sidecar_index_crypto",
+      "sidecar_index_datadir",
+      "sidecar_index_dht",
+      "sidecar_index_fs",
+      "sidecar_index_hyperswarm",
+      "sidecar_index_keetsdir",
+      "sidecar_index_keypair",
+      "sidecar_index_maxconns",
+      "sidecar_index_mypub",
+      "sidecar_index_net",
+      "sidecar_index_opts",
+      "sidecar_index_path",
+      "sidecar_index_port",
+      "sidecar_index_preamble",
+      "sidecar_index_seedfile",
+      "sidecar_index_swarm",
+      "sidecar_index_token",
+      "sidecar_index_topic"
+    ],
+    "1": [
+      "sidecar_package",
+      "sidecar_package_author",
+      "sidecar_package_description",
+      "sidecar_package_keywords",
+      "sidecar_package_license",
+      "sidecar_package_main",
+      "sidecar_package_name",
+      "sidecar_package_scripts",
+      "sidecar_package_scripts_test",
+      "sidecar_package_type",
+      "sidecar_package_version"
+    ],
+    "2": [
+      "hyperdht",
+      "hyperswarm",
+      "sidecar_package_dependencies",
+      "sidecar_package_dependencies_hyperdht",
+      "sidecar_package_dependencies_hyperswarm"
+    ],
+    "3": [
+      "test_bootstrap",
+      "test_bootstrap_dht",
+      "test_bootstrap_node",
+      "test_bootstrap_port"
+    ],
+    "4": [
+      "test_two_node",
+      "test_two_node_cleanup",
+      "test_two_node_rpc",
+      "test_two_node_sh__entry"
+    ]
+  },
+  "cohesion": {
+    "0": 0.09090909090909091,
+    "1": 0.18181818181818182,
+    "2": 0.4,
+    "3": 0.5,
+    "4": 0.6666666666666666
+  },
+  "gods": [
+    {
+      "id": "sidecar_package_scripts",
+      "label": "scripts",
+      "degree": 2
+    },
+    {
+      "id": "sidecar_package_dependencies_hyperdht",
+      "label": "hyperdht",
+      "degree": 2
+    },
+    {
+      "id": "sidecar_package_dependencies_hyperswarm",
+      "label": "hyperswarm",
+      "degree": 2
+    },
+    {
+      "id": "test_two_node_sh__entry",
+      "label": "two-node.sh script",
+      "degree": 2
+    },
+    {
+      "id": "test_two_node_rpc",
+      "label": "rpc()",
+      "degree": 2
+    },
+    {
+      "id": "sidecar_index_hyperswarm",
+      "label": "Hyperswarm",
+      "degree": 1
+    },
+    {
+      "id": "sidecar_index_dht",
+      "label": "DHT",
+      "degree": 1
+    },
+    {
+      "id": "sidecar_index_net",
+      "label": "net",
+      "degree": 1
+    },
+    {
+      "id": "sidecar_index_fs",
+      "label": "fs",
+      "degree": 1
+    },
+    {
+      "id": "sidecar_index_path",
+      "label": "path",
+      "degree": 1
+    }
+  ],
+  "surprises": [],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

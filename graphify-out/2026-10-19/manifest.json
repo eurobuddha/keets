@@ -1,0 +1,67 @@
+{
+  "sidecar/index.js": {
+    "mtime": 1791899073.2836363,
+    "ast_hash": "f8e48694c1d64b749fc41b063f634126",
+    "semantic_hash": ""
+  },
+  "sidecar/package.json": {
+    "mtime": 1791894069.8842275,
+    "ast_hash": "507d668a3c2606d9cd9bb86605a82bd3",
+    "semantic_hash": ""
+  },
+  "test/bootstrap.js": {
+    "mtime": 1791808861.8211715,
+    "ast_hash": "950f323ae956aa55167f4fe13d718106",
+    "semantic_hash": "950f323ae956aa55167f4fe13d718106"
+  },
+  "test/two-node.sh": {
+    "mtime": 1791808997.1837764,
+    "ast_hash": "35e3e1753d4316a21ceeaae3fbc5e9da",
+    "semantic_hash": "35e3e1753d4316a21ceeaae3fbc5e9da"
+  },
+  "BRIDGE.md": {
+    "mtime": 1791836293.5561044,
+    "ast_hash": "e709dd9b7f08727fe6676798b9e2432d",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1791895789.8872507,
+    "ast_hash": "61d782a4b64e542c30fe69e6a12ff6c5",
+    "semantic_hash": ""
+  },
+  "sidecar/api.js": {
+    "mtime": 1791893959.9492316,
+    "ast_hash": "52544cfd308d1d7ec7127a5e58826dbf",
+    "semantic_hash": ""
+  },
+  "sidecar/mailbox.js": {
+    "mtime": 1791895472.6053538,
+    "ast_hash": "9178f1bd13a82d16310c8b17665b760b",
+    "semantic_hash": ""
+  },
+  "sidecar/media.js": {
+    "mtime": 1791895156.6395838,
+    "ast_hash": "87bd901e06eafc5d0b1d1f1292f9528a",
+    "semantic_hash": ""
+  },
+  "sidecar/messages.js": {
+    "mtime": 1791895444.9438398,
+    "ast_hash": "7cc74de0521bff50ee362775c26d76f2",
+    "semantic_hash": ""
+  },
+  "sidecar/wire.js": {
+    "mtime": 1791894642.9763653,
+    "ast_hash": "2a84650588fe12e7bef9c2ba1c4dd495",
+    "semantic_hash": ""
+  },
+  "test/services-test.sh": {
+    "mtime": 1791894234.9930325,
+    "ast_hash": "87fb5078d94d8a5bd3af702b891b9368",
+    "semantic_hash": ""
+  },
+  "SERVICES.md": {
+    "mtime": 1791900708.2326596,
+    "ast_hash": "8468f55b609766f44fd6e926bee36a1c",
+    "semantic_hash": ""
+  }
+}

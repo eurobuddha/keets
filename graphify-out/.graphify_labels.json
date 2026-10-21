@@ -1,6 +1,6 @@
 {
   "0": "index.js",
-  "1": "package.json",
+  "1": "media-recovery-test.js",
   "2": "mailbox.js",
   "3": "bootstrap.js",
   "4": "two-node.sh",
@@ -12,5 +12,6 @@
   "10": "keets — Minima over the Keet/Holepunch transport",
   "11": "keets services — media hosting + messages (sidecar 1.2.0)",
   "12": "services-test.sh",
-  "13": "api.js"
+  "13": "api.js",
+  "14": "media-recovery-p2p.js"
 }

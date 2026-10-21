@@ -1,12 +1,12 @@
 {
   "sidecar/index.js": {
-    "mtime": 1791895594.2883139,
-    "ast_hash": "ddd4b004549574bc8de863affa1ce5e2",
+    "mtime": 1792515686.3908286,
+    "ast_hash": "dad2308094e62a06f5d083c96ab4264f",
     "semantic_hash": ""
   },
   "sidecar/package.json": {
-    "mtime": 1791894069.8842275,
-    "ast_hash": "507d668a3c2606d9cd9bb86605a82bd3",
+    "mtime": 1792507850.4577494,
+    "ast_hash": "46f9c69aba46b817f974af11c76ce728",
     "semantic_hash": ""
   },
   "test/bootstrap.js": {
@@ -30,8 +30,8 @@
     "semantic_hash": ""
   },
   "sidecar/api.js": {
-    "mtime": 1791893959.9492316,
-    "ast_hash": "52544cfd308d1d7ec7127a5e58826dbf",
+    "mtime": 1792515677.851568,
+    "ast_hash": "1ab21d9e5a2c9ad387039c32ba87e3c0",
     "semantic_hash": ""
   },
   "sidecar/mailbox.js": {
@@ -40,8 +40,8 @@
     "semantic_hash": ""
   },
   "sidecar/media.js": {
-    "mtime": 1791895156.6395838,
-    "ast_hash": "87bd901e06eafc5d0b1d1f1292f9528a",
+    "mtime": 1792507850.4554665,
+    "ast_hash": "dbf8657183f2b3c3d69de212a631262b",
     "semantic_hash": ""
   },
   "sidecar/messages.js": {
@@ -55,13 +55,48 @@
     "semantic_hash": ""
   },
   "test/services-test.sh": {
-    "mtime": 1791894234.9930325,
-    "ast_hash": "87fb5078d94d8a5bd3af702b891b9368",
+    "mtime": 1792426701.97749,
+    "ast_hash": "39ab74e4b28af83ce54dc2c9a2ff5313",
     "semantic_hash": ""
   },
   "SERVICES.md": {
-    "mtime": 1791895769.6034696,
-    "ast_hash": "3095f3bfe4574d5264b6e3ff303a4a47",
+    "mtime": 1792426793.707186,
+    "ast_hash": "66a08c78b0a3025e3afc4b813956b2e6",
+    "semantic_hash": ""
+  },
+  ".claude/settings.local.json": {
+    "mtime": 1791988568.0623868,
+    "ast_hash": "",
+    "semantic_hash": ""
+  },
+  "sidecar/media-read.js": {
+    "mtime": 1792426283.7978601,
+    "ast_hash": "d0e3e43085b6e1a419e9dca6d5bc5d6e",
+    "semantic_hash": ""
+  },
+  "test/media-limits-test.js": {
+    "mtime": 1792426283.845699,
+    "ast_hash": "2eedc600b30d7b0091ac2e4840aeb7a5",
+    "semantic_hash": ""
+  },
+  "test/media-recovery-p2p.js": {
+    "mtime": 1792507850.458001,
+    "ast_hash": "22246e97b9cdaf9f58bcc40f8d4c638a",
+    "semantic_hash": ""
+  },
+  "test/media-recovery-test.js": {
+    "mtime": 1792507850.458753,
+    "ast_hash": "f73e3a1bc372335592a5d44ba0181d42",
+    "semantic_hash": ""
+  },
+  "MEDIA_RECOVERY_1.2.2.txt": {
+    "mtime": 1792507850.4537635,
+    "ast_hash": "e64fdfb88dbfc0ec58590014db052b3a",
+    "semantic_hash": ""
+  },
+  "MEDIA_RECOVERY_1.2.3.txt": {
+    "mtime": 1792507850.4540176,
+    "ast_hash": "ade2d4d77524021e51f1caaa7ed00d1a",
     "semantic_hash": ""
   }
 }
