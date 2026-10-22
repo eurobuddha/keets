@@ -135,6 +135,13 @@ module.exports = function createMessages ({ keetsdir, dht, keyPair, mailboxes })
     throw lasterr
   }
 
+  // suspend/resume (Bare app suspension): no mailbox timer, no live subscription while
+  // suspended; mail keeps waiting in the mailbox and is fetched on resume.
+  let suspended = false
+  let pollTimer = null
+  let liveStream = null
+  let wakeSub = null
+
   return {
     // inbound KTS1/0x01 connection on the main server (magic already consumed)
     handleConn (conn) {
@@ -248,7 +255,9 @@ module.exports = function createMessages ({ keetsdir, dht, keyPair, mailboxes })
       let announced = false
       while (true) {
         try {
+          if (suspended) await new Promise(r => { wakeSub = r })
           const s = await dialService(primary)
+          liveStream = s
           try {
             s.send({ t: 'fetch', pk: me, sub: true })
             const ch = await s.next()
@@ -273,8 +282,9 @@ module.exports = function createMessages ({ keetsdir, dht, keyPair, mailboxes })
               } catch (e) { console.log('keets mail: dropped bad sealed msg: ' + e.message) }
               wire.writeFrame(s.conn, { t: 'ack', id: f.id })
             }
-          } finally { s.close() }
+          } finally { liveStream = null; s.close() }
         } catch (e) { /* unreachable / old mailbox / dropped - back off and retry */ }
+        if (suspended) continue                                // resume restarts at once
         await new Promise(r => setTimeout(r, wait))
         wait = Math.min(SUB_RETRY_MAX, wait * 2)
       }
@@ -285,10 +295,27 @@ module.exports = function createMessages ({ keetsdir, dht, keyPair, mailboxes })
         (n) => { if (n) console.log('keets mail: fetched ' + n + ' stored message(s)') },
         () => {}
       )
+      this._poll = poll
       setTimeout(poll, 10000) // after the swarm is up
-      setInterval(poll, POLL)
+      pollTimer = setInterval(poll, POLL)
       setTimeout(() => this.subscribeLoop(), 12000)
-    }
+    },
+
+    suspend () {
+      if (suspended) return
+      suspended = true
+      if (pollTimer) { clearInterval(pollTimer); pollTimer = null }
+      if (liveStream) liveStream.close()
+    },
+
+    resume () {
+      if (!suspended) return
+      suspended = false
+      if (this._poll) { this._poll(); pollTimer = setInterval(this._poll, POLL) }
+      if (wakeSub) { const w = wakeSub; wakeSub = null; w() }
+    },
+
+    isSuspended () { return suspended }
   }
 }
 module.exports.primaryMailbox = primaryMailbox
