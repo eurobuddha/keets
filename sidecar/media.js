@@ -37,7 +37,10 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
   // handshakes stall when the main keypair's bridge churns on the same UDX socket,
   // seen 2026-10-13); one swarm per DHT node is the pattern Keet itself ships.
   const mediaSeed = sha256(Buffer.concat([seed, Buffer.from('keets-media-v1')]))
-  const dht = new DHT(bootstrap && bootstrap.length ? { bootstrap } : {})
+  // Media rides its own DHT node, but routing duty belongs to the main node alone: a second
+  // adaptive node doubled the lookups a reachable phone answered. Client-only still connects,
+  // announces drives and replicates both ways.
+  const dht = new DHT(bootstrap && bootstrap.length ? { bootstrap, ephemeral: true } : { ephemeral: true })
   const swarm = new Hyperswarm({ dht, keyPair: DHT.keyPair(mediaSeed), maxPeers: maxconns })
   swarm.on('connection', (conn) => {
     console.log('keets media conn: 0x' + conn.remotePublicKey.toString('hex'))

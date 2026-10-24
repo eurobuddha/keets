@@ -14,7 +14,7 @@
 // Keep every require specifier a string literal so bare-pack can preresolve them.
 
 const IS_BARE = typeof Bare !== 'undefined'
-const VERSION = '1.2.8'
+const VERSION = '1.2.9'
 
 // On bare an uncaught error ABORTS the host process — inside a bare-kit worklet that
 // takes the whole Android app down with SIGABRT (proven on-device 2026-10-13, missing
@@ -41,6 +41,11 @@ const PORT = parseInt(arg('port', '9001'))
 const DATADIR = arg('datadir', '.')
 const TOPIC = arg('topic', 'minima-mainnet-keets-v1')
 const MAXCONNS = parseInt(arg('maxconns', '6'))
+// DHT duty. 'routing' (default, unchanged behaviour): the main DHT node is adaptive and becomes a
+// full routing node once the network shows it is directly reachable, supporting the network for
+// everyone. 'client': it never routes others' lookups (still connects, announces and receives);
+// a phone passes this on battery when the user picked "DHT relay: on when plugged in".
+const DHT_MODE = arg('dht-mode', 'routing') === 'client' ? 'client' : 'routing'
 const CONNECT = arg('connect', '').split(',').filter(Boolean)
 const APIPORT = parseInt(arg('apiport', String(PORT + 5)))
 // default store-and-forward mailboxes: the publicIPnodes fleet's keets-mailbox daemons
@@ -116,7 +121,10 @@ const hb = setInterval(() => {
 }, 5000)
 
 console.log('keets step: creating swarm')
-const dht = new DHT(BOOTSTRAP.length ? { bootstrap: BOOTSTRAP } : {})
+const dhtOpts = BOOTSTRAP.length ? { bootstrap: BOOTSTRAP } : {}
+if (DHT_MODE === 'client') dhtOpts.ephemeral = true
+const dht = new DHT(dhtOpts)
+console.log('keets dht mode: ' + DHT_MODE)
 const swarm = new Hyperswarm({ dht, keyPair })
 console.log('keets step: swarm created')
 
@@ -203,7 +211,8 @@ console.log('keets sidecar up — pubkey:0x' + mypub + ' topic:' + TOPIC + ' nod
 // --- loopback API for apps (media hosting + messaging) ---------------------
 // token also written to a file so host apps that own the datadir can pick it up
 fs.writeFileSync(path.join(keetsdir, 'apitoken'), TOKEN + '\n', { mode: 0o600 })
-require('./api')({ port: APIPORT, token: TOKEN, mypub, media, messages, version: VERSION })
+require('./api')({ port: APIPORT, token: TOKEN, mypub, media, messages, version: VERSION,
+  dhtInfo: () => ({ mode: DHT_MODE, routing: !swarm.dht.ephemeral, firewalled: swarm.dht.firewalled, mediaRouting: !media.swarm.dht.ephemeral }) })
 media.start().then(
   (st) => console.log('keets media up — drive:' + st.drive + ' pins:' + st.pins),
   (e) => console.error('keets media failed: ' + e.message)
