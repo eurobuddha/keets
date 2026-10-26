@@ -40,7 +40,9 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
   // Media rides its own DHT node, but routing duty belongs to the main node alone: a second
   // adaptive node doubled the lookups a reachable phone answered. Client-only still connects,
   // announces drives and replicates both ways.
-  const dht = new DHT(bootstrap && bootstrap.length ? { bootstrap, ephemeral: true } : { ephemeral: true })
+  const dhtOpts = bootstrap && bootstrap.length ? { bootstrap, ephemeral: true } : { ephemeral: true }
+  if (IS_BARE) dhtOpts.connectionKeepAlive = 20000   // phone: same 20 s keepalive as the main node
+  const dht = new DHT(dhtOpts)
   const swarm = new Hyperswarm({ dht, keyPair: DHT.keyPair(mediaSeed), maxPeers: maxconns })
   swarm.on('connection', (conn) => {
     console.log('keets media conn: 0x' + conn.remotePublicKey.toString('hex'))
