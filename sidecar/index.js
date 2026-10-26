@@ -14,7 +14,7 @@
 // Keep every require specifier a string literal so bare-pack can preresolve them.
 
 const IS_BARE = typeof Bare !== 'undefined'
-const VERSION = '1.2.12'
+const VERSION = '1.2.13'
 
 // On bare an uncaught error ABORTS the host process — inside a bare-kit worklet that
 // takes the whole Android app down with SIGABRT (proven on-device 2026-10-13, missing
@@ -26,6 +26,7 @@ if (IS_BARE) {
 
 const Hyperswarm = require('hyperswarm')
 const DHT = require('hyperdht')
+const diagSnapshot = require('./diag')   // read-only counters, see diag.js
 const sodium = require('sodium-universal')
 const net = IS_BARE ? require('bare-tcp') : require('net')
 const fs = IS_BARE ? require('bare-fs') : require('fs')
@@ -251,7 +252,8 @@ require('./api')({ port: APIPORT, token: TOKEN, mypub, media, messages, version:
   dhtInfo: () => ({ mode: DHT_MODE, routing: !swarm.dht.ephemeral, firewalled: swarm.dht.firewalled, mediaRouting: !media.swarm.dht.ephemeral,
     // cumulative UDP traffic since start, per DHT node (all of its sockets and connections)
     traffic: { main: udxStats(swarm.dht.udx), media: udxStats(media.swarm.dht.udx),
-      mainPeers: streamStats(swarm), mediaPeers: streamStats(media.swarm) } }) })
+      mainPeers: streamStats(swarm), mediaPeers: streamStats(media.swarm) },
+    diag: diagSnapshot() }) })
 media.start().then(
   (st) => console.log('keets media up — drive:' + st.drive + ' pins:' + st.pins),
   (e) => console.error('keets media failed: ' + e.message)
