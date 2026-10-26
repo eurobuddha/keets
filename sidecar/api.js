@@ -74,7 +74,18 @@ module.exports = function startApi ({ port, token, mypub, media, messages, versi
       // `keets action:info` succeeds and the app doesn't stick on "Node starting".
       let st = {}
       try { st = await media.start() } catch (e) {} // idempotent; on failure keep st={} and return the pubkey only (the error stays server-side)
-      return send(res, 200, { pubkey: '0x' + mypub, drive: st.drive || null, salondrive: st.salondrive || null, apiport: port, version, boundedMedia: true, dht: dhtInfo ? dhtInfo() : null })
+      return send(res, 200, { pubkey: '0x' + mypub, drive: st.drive || null, salondrive: st.salondrive || null, apiport: port, version, boundedMedia: true, privateSharing: true, dht: dhtInfo ? dhtInfo() : null })
+    }
+
+    if (req.method === 'POST' && pathname === '/private-forget') {
+      const j = JSON.parse(body.toString())
+      return send(res, 200, await media.forgetPrivate(j.url))
+    }
+
+    if (req.method === 'POST' && pathname === '/private-sharing') {
+      const j = JSON.parse(body.toString())
+      if (j.sharing !== 'true' && j.sharing !== 'false') return send(res, 400, { error: 'Invalid sharing state' })
+      return send(res, 200, await media.privateSharing(j.url, j.sharing === 'true'))
     }
 
     if (pathname === '/media' || pathname.startsWith('/media/')) {
