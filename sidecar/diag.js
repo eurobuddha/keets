@@ -17,7 +17,8 @@ const d = {
   aborts: {},            // ... and why the rest were aborted (hyperdht ERROR code)
   outConnect: 0,         // our own dht.connect() calls (mail, direct messages, swarm peers)
   outOpen: 0,
-  outErrors: {}
+  outErrors: {},
+  bridge: { capped: 0, closedBy: {}, lived: {} } // Minima bridge links: who ended them, how long they lived
 }
 const handshakePeers = new Map()
 const bump = (o, k) => { o[k] = (o[k] || 0) + 1 }
@@ -67,7 +68,15 @@ DHT.prototype.connect = function (...args) {
   return s
 }
 
-module.exports = function snapshot () {
+function snapshot () {
   const top = [...handshakePeers.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5)
   return { ...d, uptimeS: Math.round((Date.now() - d.since) / 1000), handshakeFromHosts: handshakePeers.size, topHandshakeHosts: top }
 }
+
+// A bridged Minima link ended: closer is LOCAL (our node), REMOTE-end / REMOTE-err:<code>, or ?.
+snapshot.bridgeClosed = function (closer, ms) {
+  bump(d.bridge.closedBy, closer)
+  bump(d.bridge.lived, ms < 1000 ? '<1s' : ms < 10000 ? '<10s' : ms < 60000 ? '<60s' : ms < 600000 ? '<10m' : '>=10m')
+}
+snapshot.bridgeCapped = function () { d.bridge.capped++ }
+module.exports = snapshot

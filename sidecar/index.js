@@ -14,7 +14,7 @@
 // Keep every require specifier a string literal so bare-pack can preresolve them.
 
 const IS_BARE = typeof Bare !== 'undefined'
-const VERSION = '1.2.13'
+const VERSION = '1.2.14'
 
 // On bare an uncaught error ABORTS the host process — inside a bare-kit worklet that
 // takes the whole Android app down with SIGABRT (proven on-device 2026-10-13, missing
@@ -176,6 +176,7 @@ const SVC_MAX = 16
 
 function bridge (conn, publicKey, initiator, replay) {
   if (conns >= MAXCONNS) {
+    diagSnapshot.bridgeCapped()
     conn.destroy()
     return
   }
@@ -194,9 +195,14 @@ function bridge (conn, publicKey, initiator, replay) {
     conn.pipe(tcp)
     tcp.pipe(conn)
   })
-  conn.on('error', () => tcp.destroy())
+  let closer = null
+  const opened = Date.now()
+  tcp.on('close', () => { if (!closer) closer = 'LOCAL' })
+  conn.on('end', () => { if (!closer) closer = 'REMOTE-end' })
+  conn.on('error', (e) => { if (!closer) closer = 'REMOTE-err:' + ((e && e.code) || 'error'); tcp.destroy() })
   tcp.on('error', () => conn.destroy())
   conn.on('close', () => {
+    diagSnapshot.bridgeClosed(closer || '?', Date.now() - opened)
     conns--
     tcp.destroy()
     console.log('peer closed pubkey:' + pk + ' conns:' + conns)
