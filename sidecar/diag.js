@@ -18,7 +18,7 @@ const d = {
   outConnect: 0,         // our own dht.connect() calls (mail, direct messages, swarm peers)
   outOpen: 0,
   outErrors: {},
-  bridge: { capped: 0, closedBy: {}, lived: {} } // Minima bridge links: who ended them, how long they lived
+  bridge: { capped: 0, dead: 0, closedBy: {}, lived: {} } // Minima bridge links: who ended them, how long they lived
 }
 const handshakePeers = new Map()
 const bump = (o, k) => { o[k] = (o[k] || 0) + 1 }
@@ -79,4 +79,5 @@ snapshot.bridgeClosed = function (closer, ms) {
   bump(d.bridge.lived, ms < 1000 ? '<1s' : ms < 10000 ? '<10s' : ms < 60000 ? '<60s' : ms < 600000 ? '<10m' : '>=10m')
 }
 snapshot.bridgeCapped = function () { d.bridge.capped++ }
+snapshot.bridgeDead = function () { d.bridge.dead++ }
 module.exports = snapshot

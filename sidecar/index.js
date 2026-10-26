@@ -14,7 +14,7 @@
 // Keep every require specifier a string literal so bare-pack can preresolve them.
 
 const IS_BARE = typeof Bare !== 'undefined'
-const VERSION = '1.2.14'
+const VERSION = '1.2.15'
 
 // On bare an uncaught error ABORTS the host process — inside a bare-kit worklet that
 // takes the whole Android app down with SIGABRT (proven on-device 2026-10-13, missing
@@ -175,6 +175,13 @@ let svcConns = 0
 const SVC_MAX = 16
 
 function bridge (conn, publicKey, initiator, replay) {
+  // An accepted link can die while we peek its first bytes (the remote's swarm dedupes or gives
+  // up). Bridging a dead stream counts it forever — its 'close' already fired — and after
+  // MAXCONNS of those every new link is refused at the cap (1.2.14 diag on the Fold, 2026-10-26).
+  if (conn.destroyed || conn.destroying) {
+    diagSnapshot.bridgeDead()
+    return
+  }
   if (conns >= MAXCONNS) {
     diagSnapshot.bridgeCapped()
     conn.destroy()
@@ -220,6 +227,7 @@ swarm.on('connection', (conn, info) => {
   // Deployed pre-1.2.0 peers never send the magic, so they route to the bridge unchanged.
   let buf = Buffer.alloc(0)
   const timer = setTimeout(() => { done(); bridge(conn, info.publicKey, false, buf) }, 15000)
+  conn.once('close', () => clearTimeout(timer))
   function done () { clearTimeout(timer); conn.removeListener('data', ondata) }
   function ondata (d) {
     buf = Buffer.concat([buf, d])
