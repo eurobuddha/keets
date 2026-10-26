@@ -14,7 +14,7 @@
 // Keep every require specifier a string literal so bare-pack can preresolve them.
 
 const IS_BARE = typeof Bare !== 'undefined'
-const VERSION = '1.2.9'
+const VERSION = '1.2.10'
 
 // On bare an uncaught error ABORTS the host process — inside a bare-kit worklet that
 // takes the whole Android app down with SIGABRT (proven on-device 2026-10-13, missing
@@ -109,6 +109,12 @@ function preamble (remotePubKey, initiator) {
   const frame = Buffer.alloc(4)
   frame.writeInt32BE(payload.length, 0)
   return Buffer.concat([frame, payload])
+}
+
+function udxStats (udx) {
+  try {
+    return { txPackets: udx.packetsTransmitted, rxPackets: udx.packetsReceived, txBytes: udx.bytesTransmitted, rxBytes: udx.bytesReceived }
+  } catch (e) { return null }
 }
 
 // --- swarm ----------------------------------------------------------------
@@ -212,7 +218,9 @@ console.log('keets sidecar up — pubkey:0x' + mypub + ' topic:' + TOPIC + ' nod
 // token also written to a file so host apps that own the datadir can pick it up
 fs.writeFileSync(path.join(keetsdir, 'apitoken'), TOKEN + '\n', { mode: 0o600 })
 require('./api')({ port: APIPORT, token: TOKEN, mypub, media, messages, version: VERSION,
-  dhtInfo: () => ({ mode: DHT_MODE, routing: !swarm.dht.ephemeral, firewalled: swarm.dht.firewalled, mediaRouting: !media.swarm.dht.ephemeral }) })
+  dhtInfo: () => ({ mode: DHT_MODE, routing: !swarm.dht.ephemeral, firewalled: swarm.dht.firewalled, mediaRouting: !media.swarm.dht.ephemeral,
+    // cumulative UDP traffic since start, per DHT node (all of its sockets and connections)
+    traffic: { main: udxStats(swarm.dht.udx), media: udxStats(media.swarm.dht.udx) } }) })
 media.start().then(
   (st) => console.log('keets media up — drive:' + st.drive + ' pins:' + st.pins),
   (e) => console.error('keets media failed: ' + e.message)
