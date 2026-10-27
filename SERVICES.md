@@ -204,3 +204,23 @@ other peers can retain copies. Removing a local file cannot recall those copies.
 Verification: `node --test test/media-limits-test.js` and
 `KEETS_MEDIA_ONLY=1 KEETS_TEST_DIR=<fresh-test-directory> bash test/services-test.sh`.
 The latter reuses the private two-sidecar fixture and skips message transmission.
+
+### Fetch re-dials a peer the swarm gave up on (sidecar 1.3.2)
+
+Hyperswarm dials a peer found on a topic four times (about 40 s) and then leaves it alone
+until the topic's own refresh, every 10 minutes, finds it again. Two phones whose hole-punch
+failed once (one asleep, mid network change, behind CGNAT) therefore stayed apart for up to
+10 minutes however often the user tapped Resume: a media fetch only waited for peers. Proven on
+the Fold 2026-10-27: a file transfer did nothing for 25 minutes, then completed in seconds once
+a refresh re-dialed the sender. `media.fetch` now refreshes the drive's topic first when the
+drive has no connected peer (`wakeDrive`), which re-queues an exhausted peer at once; a drive
+with a peer is untouched, so block-by-block transfers add no lookups.
+
+`api.js` logs every failed request as `keets api <METHOD> <path> failed: <reason>` (never the
+token or body); the apps used to hide that reason behind one generic line.
+
+Verification: `node test/private-shared-connection-test.js` (private files over a connection the
+photo drive paired first, in every order, and a fetch on a drive whose only holder the swarm had
+given up on - 30 s "media unavailable" on 1.3.1, 71 ms on 1.3.2), plus
+`node --test test/media-recovery-test.js`, `node test/private-sharing-test.js`,
+`node --test test/media-limits-test.js`.

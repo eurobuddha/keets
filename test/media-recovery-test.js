@@ -13,6 +13,7 @@ class Swarm {
   join (topic) { this.topics.add(topic.toString('hex')) }
   leave (topic) { this.topics.delete(topic.toString('hex')); return Promise.resolve() }
   flush () { return Promise.resolve() }
+  status () { return null }
   destroy () { this.connections.clear(); return Promise.resolve() }
 }
 class DHT { static keyPair () { return {} } }

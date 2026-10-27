@@ -208,6 +208,20 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
     return drive
   }
 
+  // Hyperswarm dials a peer it found on a topic 4 times (~40 s, lib/retry-timer.js) and then
+  // leaves it alone until the topic's own refresh, every 10 minutes, finds it again. Two phones
+  // whose hole-punch failed once (the other side asleep, mid network change, CGNAT) therefore
+  // stay apart for up to 10 min however often the user taps Resume: a fetch only WAITS for peers
+  // (readMedia → swarm.flush()). Proven on the Fold 2026-10-27: a file transfer did nothing for
+  // 25 minutes, then completed in seconds once a refresh re-dialed the sender. A fetch is an
+  // explicit ask, so a drive with no connected peer refreshes its topic now (the swarm resets an
+  // exhausted peer's attempts when a lookup returns it again, hyperswarm/index.js _handlePeer).
+  async function wakeDrive (drive) {
+    if (drive.core.peers.length) return
+    const discovery = swarm.status(drive.discoveryKey)
+    if (discovery) await discovery.refresh().catch(() => {})
+  }
+
   function parseUrl (url) {
     const m = /^keets:\/\/([0-9a-fA-F]{64})(\/[^?#]*)(?:[?#]hash=([0-9a-fA-F]{64}))?$/.exec(url)
     if (!m) throw new Error('bad keets:// url')
@@ -237,6 +251,7 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
       const { key, path: p, hash } = parseUrl(url)
       const id = privateId(p)
       const drive = id ? await privateDrive(id, key, false) : await getDrive(key)
+      await wakeDrive(drive)
       const buf = await readMedia(drive, swarm, p, maxBytes)
       if (hash && sha256(buf).toString('hex') !== hash) throw new Error('hash mismatch — content does not match url')
       return buf
