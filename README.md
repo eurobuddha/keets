@@ -15,7 +15,9 @@ become first-class peers on the existing mainnet; classic nodes are unaffected.
 | Media (Hyperdrive host/fetch/pin) | `sidecar/media.js` |
 | Messages (direct + mailbox store-and-forward) | `sidecar/messages.js`, `sidecar/wire.js` |
 | App loopback API (port+5, token-authed) | `sidecar/api.js` |
-| Mailbox daemon (fleet, node-only) | `sidecar/mailbox.js` |
+| Mailbox (standalone fleet daemon, or embedded via `index.js --serve`) | `sidecar/mailbox.js` |
+| Signed mailbox list maintainer (keygen / re-sign / verify) | `tools/mailboxes-sign.js` |
+| Serve-mode test (bootstrap + mailbox in one sidecar) | `test/serve-test.js` |
 | Java node changes | `core/minima-core` branch **`keets`** (worktree: `_worktrees/minima-core-keets`) |
 | Two-node loopback test | `test/two-node.sh` |
 | Services test (media + messages + mailbox) | `test/services-test.sh` |

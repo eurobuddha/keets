@@ -134,10 +134,51 @@ overridable with `--mailboxes`. pi-old is skipped (32-bit userland). Deployed
 Mailboxes are dialed by pubkey through the DHT — no host:port coupling; the table's
 IPs are only where they happen to run today.
 
+### Signed mailbox list (sidecar 1.3.0)
+
+Nodes no longer depend on the baked-in list alone: at startup the Java node
+(`KeetsMailboxList.java`, core fork) fetches `https://eurobuddha.com/keets/mailboxes.json`,
+verifies its Ed25519 signature against the baked-in public key
+(`GeneralParams.KEETS_MAILBOX_SIGNKEY`), caches it at `<data>/keets/mailboxes.json`, and
+passes it to the sidecar as `--mailboxes` — which now **replaces** `DEFAULT_MAILBOXES`
+(absent/invalid/offline → cached copy → baked defaults). So a new mailbox joins the
+network with a re-signed file, no app release.
+
+File: `{"v":1,"ts":<ms>,"mailboxes":["<64-hex>",…],"sig":"<128-hex>"}`; signed string
+`"1\n<ts>\n<sorted mailboxes joined by ,>"`. A file whose `ts` is older than the cached
+one is rejected (no rollback). Maintained with `tools/mailboxes-sign.js`:
+
+```
+node tools/mailboxes-sign.js --keygen ~/.keets/mailbox-signing.key          # once; prints the pubkey to bake
+node tools/mailboxes-sign.js --key ~/.keets/mailbox-signing.key \
+     --in mailboxes.json --out mailboxes.json --add 0x<new mailbox pubkey>   # re-sign
+node tools/mailboxes-sign.js --verify mailboxes.json --pub <64-hex>          # what the nodes do
+scp mailboxes.json hetzner:/var/www/html/keets/mailboxes.json
+```
+
+`primaryMailbox()` hashes the recipient key over the sorted list, so a list change
+re-maps some recipients' primary; the 45 s / 10 min poll of every mailbox covers the gap.
+
+### Serve mode — one process per fleet box (sidecar 1.3.0)
+
+`index.js --serve [--dht-port 49737] [--public-host <ip>] [--mailbox-dir <dir>]` makes the
+node's own sidecar ALSO the box's public DHT bootstrap node (fixed port, non-ephemeral and
+unfirewalled from the first tick — what `DHT.bootstrapper()` does) and its mailbox: a second
+HyperDHT server on the mailbox keypair from `<mailbox-dir>/keypair`, sharing the one DHT
+instance. The parlons-node fleet jar spawns it this way; `hyperdht-bootstrap.service` and
+`keets-mailbox.service` are no longer needed on such a box. `GET /info` reports
+`dht.serve = { dhtPort, publicHost, mailboxPubkey, store }` — the pubkey to sign into the
+list and the `host:49737` to list as a bootstrap. `--bootstrap none` = private DHT root.
+`mailbox.js` still runs standalone for the original fleet units (same seed file layout, so
+a box can later be migrated without changing its published pubkey).
+
 ## Tests
 
 - `test/services-test.sh` — private DHT: API auth, publish/fetch byte-exact, hash
   tamper rejection, direct message + ack, offline → mailbox → restart → fetch.
+- `test/serve-test.js` — serve mode: A (`--serve --bootstrap none`) is the only bootstrap
+  for B, `--mailboxes` replaces the defaults, B→offline C lands in A's store, C fetches it
+  and its ack deletes the copy.
 - `test/two-node.sh` — the Minima bridge regression (unchanged, still passes with the
   peek routing).
 
