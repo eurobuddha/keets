@@ -194,3 +194,18 @@ test('worklet shutdown does not acknowledge a failed store close or unknown comm
   assert.equal(calls, 0)
   await assert.rejects(send('close-media-v1'), /close failed/)
 })
+
+test('shutdown racing an opening transfer leaves no storage lock behind', async t => {
+  const create = fixture(t), first = create()
+  await first.start()
+  const opening = first.publish('/private/' + 'b'.repeat(32) + '/manifest', Buffer.from('racing file'))
+  // Observe the result immediately, including rejection when close wins.
+  const settled = Promise.allSettled([opening])
+  await Promise.resolve()
+  await first.close()
+  await settled
+  const next = create()
+  t.after(() => next.close())
+  await next.start()
+  await next.publish('/private/' + 'b'.repeat(32) + '/manifest', Buffer.from('retried file'))
+})

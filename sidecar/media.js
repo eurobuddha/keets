@@ -81,6 +81,7 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
       await isolated.ready()
       const drive = new Hyperdrive(isolated, record.own ? undefined : Buffer.from(record.key, 'hex'))
       await drive.ready()
+      assertOpen()
       if (record.key && record.key !== drive.key.toString('hex')) throw new Error('private drive identity changed')
       record.key = drive.key.toString('hex')
       const entry = { store: isolated, drive }
@@ -89,7 +90,7 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
       swarm.join(drive.discoveryKey, { server: true, client: true })
       savePrivate()
       return entry
-    } catch (e) { const entry = privateOpen.get(slot); if (entry) await swarm.leave(entry.drive.discoveryKey); privateOpen.delete(slot); await isolated.close(); throw e }
+    } catch (e) { const entry = privateOpen.get(slot); if (entry) await swarm.leave(entry.drive.discoveryKey).catch(() => {}); privateOpen.delete(slot); await isolated.close(); throw e }
   }
   swarm.on('connection', connection => {
     for (const entry of privateOpen.values()) if (!entry.store.closing) entry.store.replicate(connection)
@@ -173,6 +174,7 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
   }
 
   function openOwn (current, scope) {
+    assertOpen()
     if (!ownedDrives.has(scope)) {
       const opening = (async () => {
         const drive = new Hyperdrive(current.namespace(scope))
@@ -193,6 +195,7 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
   }
 
   async function openDrive (current, keyhex) {
+    assertOpen()
     let drive = drives.get(keyhex)
     if (!drive) {
       drive = new Hyperdrive(current, Buffer.from(keyhex, 'hex'))
