@@ -214,12 +214,17 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
   // stay apart for up to 10 min however often the user taps Resume: a fetch only WAITS for peers
   // (readMedia → swarm.flush()). Proven on the Fold 2026-10-27: a file transfer did nothing for
   // 25 minutes, then completed in seconds once a refresh re-dialed the sender. A fetch is an
-  // explicit ask, so a drive with no connected peer refreshes its topic now (the swarm resets an
-  // exhausted peer's attempts when a lookup returns it again, hyperswarm/index.js _handlePeer).
-  async function wakeDrive (drive) {
+  // explicit ask, so a drive with no connected peer refreshes its topic now: the exhausted peer
+  // was dropped from swarm.peers (no retry timer → GC on close), so the lookup re-creates it
+  // with fresh attempts and dials. Not awaited here: readMedia's swarm.flush() waits for the
+  // refresh inside its own 30 s deadline (a lookup on a bad network can take that long alone).
+  // A drive just attached to a live connection reports no peer until its channel pairs, so the
+  // first fetch there spends one needless lookup; sequential block fetches coalesce on
+  // discovery._currentRefresh and skip it entirely once a peer is up.
+  function wakeDrive (drive) {
     if (drive.core.peers.length) return
     const discovery = swarm.status(drive.discoveryKey)
-    if (discovery) await discovery.refresh().catch(() => {})
+    if (discovery) discovery.refresh().catch(() => {})
   }
 
   function parseUrl (url) {
@@ -251,7 +256,7 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
       const { key, path: p, hash } = parseUrl(url)
       const id = privateId(p)
       const drive = id ? await privateDrive(id, key, false) : await getDrive(key)
-      await wakeDrive(drive)
+      wakeDrive(drive)
       const buf = await readMedia(drive, swarm, p, maxBytes)
       if (hash && sha256(buf).toString('hex') !== hash) throw new Error('hash mismatch — content does not match url')
       return buf
