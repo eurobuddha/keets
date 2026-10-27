@@ -13,6 +13,7 @@ class Swarm {
   join (topic) { this.topics.add(topic.toString('hex')) }
   leave (topic) { this.topics.delete(topic.toString('hex')); return Promise.resolve() }
   flush () { return Promise.resolve() }
+  destroy () { this.connections.clear(); return Promise.resolve() }
 }
 class DHT { static keyPair () { return {} } }
 function factory () {
@@ -159,4 +160,37 @@ test('/info remains available during storage failure and uploads recover after t
   const retained = await request('GET', '/media?url=' + encodeURIComponent(old.url))
   assert.equal(retained.status, 200)
   assert.equal(retained.body, 'retained attachment')
+})
+
+test('acknowledged worklet shutdown releases chat and private stores for same-process restart', async t => {
+  const create = fixture(t), first = create()
+  const before = await first.start()
+  const photo = await first.publish('/chat/restart.jpg', Buffer.from('photo retained'))
+  const id = 'a'.repeat(32)
+  const file = await first.publish('/private/' + id + '/manifest', Buffer.from('file retained'))
+  const EventEmitter = require('node:events')
+  const kit = new EventEmitter()
+  require('../sidecar/worklet-lifecycle')(kit, first)
+  const reply = () => new Promise((resolve, reject) => kit.emit('push', Buffer.from('close-media-v1'),
+    (error, value) => error ? reject(error) : resolve(value)))
+  assert.deepEqual(await Promise.all([reply(), reply()]), ['media-closed-v1', 'media-closed-v1'])
+  await assert.rejects(first.publish('/chat/late.jpg', Buffer.from('late')), /shutting down/)
+  await assert.rejects(first.start(), /shutting down/)
+  const next = create()
+  t.after(() => next.close())
+  assert.deepEqual(await next.start(), before)
+  assert.deepEqual(await next.fetch(photo.url), Buffer.from('photo retained'))
+  assert.deepEqual(await next.fetch(file.url), Buffer.from('file retained'))
+  await next.publish('/chat/new.jpg', Buffer.from('new photo'))
+})
+
+test('worklet shutdown does not acknowledge a failed store close or unknown command', async () => {
+  const EventEmitter = require('node:events'), kit = new EventEmitter()
+  let calls = 0
+  require('../sidecar/worklet-lifecycle')(kit, { async close () { calls++; throw new Error('close failed') } })
+  const send = command => new Promise((resolve, reject) => kit.emit('push', Buffer.from(command),
+    (error, value) => error ? reject(error) : resolve(value)))
+  await assert.rejects(send('wrong'), /Unknown worklet control/)
+  assert.equal(calls, 0)
+  await assert.rejects(send('close-media-v1'), /close failed/)
 })

@@ -14,7 +14,7 @@
 // Keep every require specifier a string literal so bare-pack can preresolve them.
 
 const IS_BARE = typeof Bare !== 'undefined'
-const VERSION = '1.3.0'
+const VERSION = '1.3.1'
 
 // On bare an uncaught error ABORTS the host process — inside a bare-kit worklet that
 // takes the whole Android app down with SIGABRT (proven on-device 2026-10-13, missing
@@ -188,6 +188,8 @@ console.log('keets step: swarm created')
 const wire = require('./wire')
 const media = require('./media')({ keetsdir, seed, bootstrap: BOOTSTRAP, maxconns: 8 })
 const messages = require('./messages')({ keetsdir, dht, keyPair, mailboxes: MAILBOXES })
+// Private parent/worklet IPC; never exposed to network peers or the HTTP API.
+if (IS_BARE && typeof BareKit !== 'undefined') require('./worklet-lifecycle')(BareKit, media)
 // serve mode: the box's own mailbox rides the same DHT on its own (published) keypair.
 const mailbox = SERVE ? require('./mailbox').createMailbox({ datadir: MAILBOX_DIR, dht }) : null
 

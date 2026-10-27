@@ -1,0 +1,25 @@
+Keets media lock regression — 2026-10-27, sidecar 1.3.1
+
+Confirmed: Bare 1.34.1 thread termination without closing Corestore retains its
+file lock in the Android host process. A replacement thread fails with ELOCKED.
+The Fold's in-app restart retained PID 31884 and immediately reproduced the error.
+This affects the ordinary photo store and active private-file stores, independent
+of the transfer receipt protocol. No user storage is deleted or re-keyed.
+
+Fix: parent-only Bare Kit push close-media-v1 closes the media swarm, drains store
+open/private operations and closes all Corestores. media-closed-v1 is returned only
+after success. New media operations cannot reopen stores during shutdown.
+Android must await this acknowledgement off its UI thread before termination.
+
+Validation: 14 recovery/HTTP/bounds tests passed. Bare private-P2P fixture passed
+photo preservation, independent stop, paused restart, re-share and cache removal.
+The saved worklet-lock test reproduces ELOCKED with abrupt thread termination and
+success with explicit close, using real pinned Corestore in the same process.
+Pack test/worklet-lock-worker.js with bare-pack --base . --host darwin-arm64
+--out build/worklet-lock.bundle, then bare test/worklet-lock-test.js build/worklet-lock.bundle.
+Use the app's pinned Bare 1.34.1 and bare-pack 2.2.4 tools.
+
+Code review: preserve file-transfer records, keys and hashes; unknown IPC requests
+are rejected; failed close never receives success acknowledgement. Dependency
+versions/integrities are unchanged. Root lockfile version corrected to match
+package metadata (the preceding 1.3.0 release retained 1.2.15 root metadata).

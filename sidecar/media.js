@@ -31,6 +31,9 @@ const { readMedia } = require('./media-read')
 module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) {
   let store = null
   let storeOpening = null
+  let closing = false
+  let closePromise = null
+  const assertOpen = () => { if (closing) throw new Error('Media storage is shutting down') }
 
   // dedicated identity for media replication, derived from the node seed — and a
   // dedicated DHT node: sharing the main swarm's DHT node proved flaky (replication
@@ -64,7 +67,7 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
   let privateQueue = Promise.resolve()
   const serial = fn => {
     const job = privateQueue.then(async () => {
-      try { return { value: await fn() } } catch (error) { return { error } }
+      try { assertOpen(); return { value: await fn() } } catch (error) { return { error } }
     })
     privateQueue = job.then(() => {})
     return job.then(result => { if (result.error) throw result.error; return result.value })
@@ -118,6 +121,7 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
   // Retry by reopening the SAME directory, never by clearing it or replacing keys.
   // Share one opening promise, like own(), so concurrent uploads cannot race locks.
   async function readyStore () {
+    assertOpen()
     if (storeOpening) return storeOpening
     if (store && !store.closing) return store
     const opening = (async () => {
@@ -173,7 +177,7 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
       const opening = (async () => {
         const drive = new Hyperdrive(current.namespace(scope))
         await drive.ready()
-        if (current !== store || current.closing) throw new Error('Media storage restarted; try again')
+        if (closing || current !== store || current.closing) throw new Error('Media storage restarted; try again')
         drives.set(drive.key.toString('hex'), drive)
         swarm.join(drive.discoveryKey, { server: true, client: true })
         return drive
@@ -193,7 +197,7 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
     if (!drive) {
       drive = new Hyperdrive(current, Buffer.from(keyhex, 'hex'))
       await drive.ready()
-      if (current !== store || current.closing) throw new Error('Media storage restarted; try again')
+      if (closing || current !== store || current.closing) throw new Error('Media storage restarted; try again')
       drives.set(keyhex, drive)
       // client to fetch, server to re-seed what we hold (organic mirroring)
       swarm.join(drive.discoveryKey, { server: true, client: true })
@@ -273,6 +277,24 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
       })
     },
     async closePrivate () { for (const entry of privateOpen.values()) await entry.store.close(); privateOpen.clear() },
+    // A worklet is a thread, not a process: terminating it does not release raw
+    // filesystem descriptors. The host must await this before replacing it.
+    close () {
+      if (closePromise) return closePromise
+      closing = true
+      closePromise = (async () => {
+        await swarm.destroy()
+        await privateQueue
+        if (storeOpening) await storeOpening.catch(() => {})
+        await Promise.all([...ownedDrives.values()].map(p => p.catch(() => {})))
+        await Promise.all([...privateOpen.values()].map(entry => entry.store.close()))
+        if (store) await store.close()
+        privateOpen.clear()
+        drives.clear()
+        ownedDrives.clear()
+      })()
+      return closePromise
+    },
     async list (scope) {
       const drive = await own(scope)
       const out = []

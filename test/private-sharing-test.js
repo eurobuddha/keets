@@ -31,7 +31,7 @@ const createMedia = require('../sidecar/media')
   // Only b has replicated the original; stop its seeding too. A fresh peer cannot fetch it.
   await b.privateSharing(first.url,false)
   await assert.rejects(c.fetch(data.url),/unavailable|closed|cancel/i);console.log('PASS fresh peer cannot fetch stopped historical bytes')
-  await a.closePrivate();await a.swarm.destroy();await a.store.close()
+  await a.close()
   const restarted=peer('a',1);await restarted.start()
   await assert.rejects(restarted.fetch(data.url),/sharing stopped/);console.log('PASS stop persists over restart')
   await restarted.privateSharing(first.url,true)
@@ -41,5 +41,5 @@ const createMedia = require('../sidecar/media')
   if (JSON.parse(fs.readFileSync(path.join(dir,'a','private-transfers.json'),'utf8'))['o-'+id]) throw Error('Removed transfer retained its storage slot')
   if (fs.existsSync(path.join(dir,'a','private-stores','o-'+id))) throw Error('Removed transfer retained its cache')
   console.log('PASS explicit removal frees bounded storage; active removal refused')
- } finally {clearTimeout(timer);for(const p of peers){await p.closePrivate();await p.swarm.destroy();if(p.store)await p.store.close().catch(()=>{})}await boot.destroy();fs.rmSync(dir,{recursive:true,force:true})}
+ } finally {clearTimeout(timer);for(const p of peers){await p.close()}await boot.destroy();fs.rmSync(dir,{recursive:true,force:true})}
 })().catch(e=>{console.error(e);if(IS_BARE)Bare.exit(1);else process.exitCode=1})
