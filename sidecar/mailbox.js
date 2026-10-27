@@ -70,6 +70,8 @@ function createMailbox ({ datadir, dht }) {
     fs.writeFileSync(seedfile, seed, { mode: 0o600 })
   }
   const keyPair = DHT.keyPair(seed)
+  // the published identity, readable by the host (the fleet jar prints it in its banner)
+  fs.writeFileSync(path.join(datadir, 'pubkey'), '0x' + keyPair.publicKey.toString('hex') + '\n')
 
   function dirSize (dir) {
     let n = 0
