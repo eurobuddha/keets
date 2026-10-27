@@ -263,6 +263,10 @@ module.exports = function createMedia ({ keetsdir, seed, bootstrap, maxconns }) 
       if (!id || !pathname.endsWith('/manifest') || typeof sharing !== 'boolean') throw new Error('Invalid private sharing request')
       return await serial(async () => {
         const slot = Object.keys(privateRecords).find(k => privateRecords[k].key === key && privateRecords[k].id === id)
+        // A transfer from before per-transfer storage (1.2.12) has no record: nothing serves it, so
+        // stopping it is already true. Refusing made the apps' delivery tick retry every 5 s forever
+        // and blocked Remove for those files (Fold 2026-10-27).
+        if (!slot && !sharing) return { sharing: false }
         if (!slot) throw new Error('Legacy shared drive: send this file again with updated Keets')
         const record = privateRecords[slot]
         record.sharing = sharing

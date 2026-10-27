@@ -205,7 +205,7 @@ Verification: `node --test test/media-limits-test.js` and
 `KEETS_MEDIA_ONLY=1 KEETS_TEST_DIR=<fresh-test-directory> bash test/services-test.sh`.
 The latter reuses the private two-sidecar fixture and skips message transmission.
 
-### Fetch re-dials a peer the swarm gave up on (sidecar 1.3.2)
+### Fetch re-dials a peer the swarm gave up on (sidecar 1.3.2, 1.3.3)
 
 Hyperswarm dials a peer found on a topic four times (about 40 s) and then leaves it alone
 until the topic's own refresh, every 10 minutes, finds it again. Two phones whose hole-punch
@@ -224,3 +224,8 @@ photo drive paired first, in every order, and a fetch on a drive whose only hold
 given up on - 30 s "media unavailable" on 1.3.1, 71 ms on 1.3.2), plus
 `node --test test/media-recovery-test.js`, `node test/private-sharing-test.js`,
 `node --test test/media-limits-test.js`.
+
+1.3.3: `POST /private-sharing` with `sharing:false` for a transfer that has no record (sent
+before 1.2.12's per-transfer storage) answers `{sharing:false}`: nothing serves it, so it is
+already stopped. Refusing it made the apps' delivery tick retry every 5 s forever and blocked
+Remove for those files. Re-sharing an unknown transfer is still refused.
