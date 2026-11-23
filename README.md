@@ -48,8 +48,12 @@ on the mainnet DHT 2026-10-13.
 java -jar minima-keets.jar -data ~/minimadata -keets \
   -keetssidecar /path/to/keets/sidecar/index.js \
   [-keetsbootstrap host1:49737,host2:49737] \
-  [-keetsconnect 0x<pubkey>,...] [-keetsmaxconns 6]
+  [-keetsconnect 0x<pubkey>,...] [-keetsmaxconns 6] [-keetschatonly]
 ```
+
+`-keetschatonly` (sidecar `--chat-only`, 1.3.5) keeps chat, media and the mailbox on keets but
+carries no Minima traffic over it: the sidecar never joins the chain topic and refuses every
+non-service link, so blocks and transactions travel over classic P2P only.
 
 Needs `node` on PATH (desktop). Your dialable identity is printed at startup and written to
 `<datadir>/keets/pubkey`. The default bootstrap is the owner-run 7-node fleet baked into

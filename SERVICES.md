@@ -172,8 +172,20 @@ list and the `host:49737` to list as a bootstrap. `--bootstrap none` = private D
 `mailbox.js` still runs standalone for the original fleet units (same seed file layout, so
 a box can later be migrated without changing its published pubkey).
 
+### Chat only — no Minima traffic over keets (sidecar 1.3.5)
+
+`index.js --chat-only` (node flag `-keetschatonly`) skips `swarm.join(topic)` and the
+`--connect` dials, calls `swarm.listen()` so the sidecar still answers on its own key, and
+makes `bridge()` destroy every link instead of piping it to the node. Messages, the mailbox
+and media are unchanged, and it interoperates with peers in full mode. `GET /info` reports
+`dht.chatOnly`; the node's `network` reports `keetschatonly`, `classic` and `keetspeers`.
+
 ## Tests
 
+- `test/chat-only-test.sh` — private DHT, a TCP sink on each node port: a full-mode peer
+  bridges on the topic, the `--chat-only` peer bridges nobody (not found on the topic, a direct
+  chain dial refused, nothing reaches its node port), messages arrive over a direct dial both
+  ways, and mail stored while it was offline arrives after a restart.
 - `test/services-test.sh` — private DHT: API auth, publish/fetch byte-exact, hash
   tamper rejection, direct message + ack, offline → mailbox → restart → fetch.
 - `test/serve-test.js` — serve mode: A (`--serve --bootstrap none`) is the only bootstrap
