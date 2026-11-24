@@ -117,6 +117,10 @@ function unseal (myKeyPair, sealed) {
   const { m, sig } = JSON.parse(inner.toString('utf8'))
   const mbuf = Buffer.from(m, 'base64')
   const env = JSON.parse(mbuf.toString('utf8'))
+  // 1.3.6: the sender id is EXACTLY a 32-byte key in lower-case hex. Buffer.from(x, 'hex') stops at the first character
+  // that is not hex, so a `from` of a real key FOLLOWED BY other text passed the signature check and was handed on whole;
+  // a host that puts the sender into a node command ("keets action:send to:<from> …") then ran that text.
+  if (typeof env.from !== 'string' || !/^[0-9a-f]{64}$/.test(env.from)) throw new Error('bad sender id')
   const ok = sodium.crypto_sign_verify_detached(Buffer.from(sig, 'base64'), mbuf, Buffer.from(env.from, 'hex'))
   if (!ok) throw new Error('bad sender signature')
   return { from: '0x' + env.from, ts: env.ts, payload: Buffer.from(env.payload, 'base64') }
